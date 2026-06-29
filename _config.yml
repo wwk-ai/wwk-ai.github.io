@@ -31,6 +31,8 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: lang
 skip_render:
+  - "about/index.html"
+  - "images/*"
 
 # 写作配置
 new_post_name: :year:month:day-:title.md
@@ -170,10 +172,12 @@ import:
     - |
       <script defer>
         document.addEventListener('DOMContentLoaded', function() {
-          const subtitleEl = document.querySelector('.cover-body .subtitle');
+          // Volantis 6.x: subtitle 在 .cover-body 内，class 为 p.subtitle
+          const subtitleEl = document.querySelector('.cover-body .subtitle') || document.querySelector('.cover-body .top p:nth-child(2)');
           if (!subtitleEl) return;
           const text = 'Java全栈技术实战';
           subtitleEl.innerHTML = '<span class="typewriter-text"></span><span class="typewriter-cursor"></span>';
+          subtitleEl.style.minHeight = '1.5em';
           const textSpan = subtitleEl.querySelector('.typewriter-text');
           let charIndex = 0;
           let isDeleting = false;
