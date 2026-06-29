@@ -118,6 +118,22 @@
       opacity: 0.03;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
+    /* AI wave layers */
+    .hero-waves {
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 220px; z-index: 1;
+      overflow: hidden; pointer-events: none;
+    }
+    .hero-waves svg {
+      position: absolute; bottom: 0; left: 0;
+      width: 200%; height: 100%;
+    }
+    .hero-wave1 { animation: waveShift 7s linear infinite; opacity: 0.18; }
+    .hero-wave2 { animation: waveShift 11s linear infinite reverse; opacity: 0.12; }
+    .hero-wave3 { animation: waveShift 15s linear infinite; opacity: 0.08; }
+    @keyframes waveShift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
     .hero-content {
       position: relative; z-index: 2;
       text-align: center;
@@ -496,10 +512,27 @@
     .footer-link:hover { color: var(--accent); }
 
     /* ========== ANIMATIONS ========== */
+    .typewriter-line {
+      min-height: 1.6em;
+      display: inline-block;
+    }
+    #hero-typewriter {
+      background: linear-gradient(90deg, #c7d2fe 0%, #fbbf24 50%, #a78bfa 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s linear infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
     .typewriter-cursor {
       font-weight: 300;
       animation: cursorBlink 0.85s step-end infinite;
       color: rgba(255, 255, 255, 0.8);
+      -webkit-text-fill-color: initial;
     }
     @keyframes cursorBlink {
       0%, 100% { opacity: 1; }
@@ -583,6 +616,18 @@
       >
       <div class="hero-bg-overlay"></div>
       <div class="hero-bg-grain"></div>
+      <!-- AI gradient waves -->
+      <div class="hero-waves">
+        <svg class="hero-wave1" viewBox="0 0 1440 220" preserveAspectRatio="none">
+          <path fill="rgba(99,102,241,0.35)" d="M0,120L60,130C120,140,240,160,360,155C480,150,600,120,720,110C840,100,960,110,1080,125C1200,140,1320,160,1380,170L1440,180L1440,220L1380,220C1320,220,1200,220,1080,220C960,220,840,220,720,220C600,220,480,220,360,220C240,220,120,220,60,220L0,220Z"/>
+        </svg>
+        <svg class="hero-wave2" viewBox="0 0 1440 220" preserveAspectRatio="none">
+          <path fill="rgba(167,139,250,0.3)" d="M0,160L60,155C120,150,240,140,360,145C480,150,600,170,720,175C840,180,960,170,1080,160C1200,150,1320,140,1380,135L1440,130L1440,220L1380,220C1320,220,1200,220,1080,220C960,220,840,220,720,220C600,220,480,220,360,220C240,220,120,220,60,220L0,220Z"/>
+        </svg>
+        <svg class="hero-wave3" viewBox="0 0 1440 220" preserveAspectRatio="none">
+          <path fill="rgba(251,191,36,0.2)" d="M0,140L60,148C120,156,240,172,360,170C480,168,600,148,720,140C840,132,960,136,1080,148C1200,160,1320,180,1380,190L1440,200L1440,220L1380,220C1320,220,1200,220,1080,220C960,220,840,220,720,220C600,220,480,220,360,220C240,220,120,220,60,220L0,220Z"/>
+        </svg>
+      </div>
     </div>
     <div class="hero-content">
       <div class="hero-badge">
@@ -809,18 +854,27 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(function(el) { observer.observe(el); });
 
-    // Hero typewriter
+    // Hero typewriter - two sentences rotation
     (function() {
       var el = document.getElementById('hero-typewriter');
       if (!el) return;
-      var text = '从模型预训练到业务场景全流程工程化实践';
-      var i = 0, deleting = false;
+      var texts = [
+        '从模型预训练到业务场景全流程工程化实践',
+        '探索大模型私有化落地完整解决方案'
+      ];
+      var ti = 0, ci = 0, deleting = false;
+      var text = texts[ti];
       function tick() {
-        if (deleting) { el.textContent = text.substring(0, i - 1); i--; }
-        else { el.textContent = text.substring(0, i + 1); i++; }
-        var d = deleting ? 60 : 140;
-        if (!deleting && i === text.length) { deleting = true; d = 2500; }
-        else if (deleting && i === 0) { deleting = false; d = 500; }
+        if (deleting) { el.textContent = text.substring(0, ci - 1); ci--; }
+        else { el.textContent = text.substring(0, ci + 1); ci++; }
+        var d = deleting ? 50 : 130;
+        if (!deleting && ci === text.length) { deleting = true; d = 2200; }
+        else if (deleting && ci === 0) {
+          deleting = false;
+          ti = (ti + 1) % texts.length;
+          text = texts[ti];
+          d = 400;
+        }
         setTimeout(tick, d);
       }
       tick();
