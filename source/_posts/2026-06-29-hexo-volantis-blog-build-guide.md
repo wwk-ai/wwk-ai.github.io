@@ -14,7 +14,7 @@ keywords: Hexo博客搭建, Volantis主题, GitHub Pages, GitHub Actions, 技术
 description: "完整记录使用 Hexo 7.x + Volantis 6.x + GitHub Pages 从零搭建企业级技术博客的全过程，包含踩坑实录、CI/CD配置、主题定制与部署优化。"
 comments: true
 toc: true
-headimg: https://picsum.photos/seed/hexoblog/1200/600
+
 ---
 
 ## 背景

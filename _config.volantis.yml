@@ -69,8 +69,8 @@ navbar:
 cover:
   # height_scheme: half
   title: 'Wesley AI Lab'
-  subtitle: 'Java全栈技术实战'
-  background: https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1920&auto=format&fit=crop
+  subtitle: 'AI 企业级大模型落地｜Java 全栈｜Python 大数据实战'
+  background: ''
   features:
     - name: AI专栏
       img: volantis-static/media/twemoji/assets/svg/1f9e0.svg

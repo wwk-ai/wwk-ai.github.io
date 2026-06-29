@@ -175,7 +175,7 @@ import:
           // Volantis 6.x: subtitle 在 .cover-body 内，class 为 p.subtitle
           const subtitleEl = document.querySelector('.cover-body .subtitle') || document.querySelector('.cover-body .top p:nth-child(2)');
           if (!subtitleEl) return;
-          const text = 'Java全栈技术实战';
+          const text = 'AI 企业级大模型落地｜Java 全栈｜Python 大数据实战';
           subtitleEl.innerHTML = '<span class="typewriter-text"></span><span class="typewriter-cursor"></span>';
           subtitleEl.style.minHeight = '1.5em';
           const textSpan = subtitleEl.querySelector('.typewriter-text');

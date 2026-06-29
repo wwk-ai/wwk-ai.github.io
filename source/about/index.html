@@ -249,6 +249,67 @@
       .card { padding: 24px; }
       .avatar-wrapper { width: 120px; height: 120px; }
     }
+    /* 微信二维码弹窗 */
+    .qr-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-modal-overlay.active { display: flex; }
+    .qr-modal {
+      background: #131836;
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+      animation: modalIn 0.3s ease;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(102, 126, 234, 0.15);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .qr-modal h3 {
+      font-size: 18px;
+      color: #e2e8f0;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .qr-modal img {
+      width: 200px;
+      height: 200px;
+      border-radius: 12px;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      object-fit: cover;
+    }
+    .qr-modal p {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+    .qr-modal .close-btn {
+      margin-top: 20px;
+      padding: 8px 28px;
+      border-radius: 10px;
+      border: 1px solid rgba(102, 126, 234, 0.4);
+      background: rgba(102, 126, 234, 0.15);
+      color: #a5b4fc;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .qr-modal .close-btn:hover {
+      background: rgba(102, 126, 234, 0.3);
+      border-color: rgba(102, 126, 234, 0.6);
+    }
     /* 浮动粒子 */
     .particle {
       position: fixed;
@@ -309,6 +370,11 @@
       </div>
       <p>专注于企业级 AI 大模型落地与 Java 后端架构设计。拥有多年高并发系统实战经验，擅长将前沿 AI 技术与传统业务系统深度融合，推动企业数字化转型。</p>
       <p style="margin-top:12px">曾主导多个千万级用户量的分布式系统架构设计，在 LLM 私有化部署、RAG 知识库构建、Spring Cloud 微服务治理等领域有深入实践。</p>
+      <div class="skills" style="margin-top:16px">
+        <span class="skill-tag">男</span>
+        <span class="skill-tag">深圳</span>
+        <span class="skill-tag">weiwk01@126.com</span>
+      </div>
     </div>
 
     <!-- 技术栈 -->
@@ -337,7 +403,7 @@
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         正在做的事
       </div>
-      <p>正在将语雀上的技术内容全面迁移到独立博客，打造个人技术品牌阵地。同时深入研究生成式 AI 在企业场景中的落地应用，包括智能客服、知识问答、代码辅助等方向。</p>
+      <p>现阶段深耕 Harness Engineering 与 Loop Harness Engineering 的底层架构思想，主攻 MOE 架构大模型完整预训练链路，聚焦大模型在企业业务场景下全流程工程化落地实践。</p>
     </div>
 
     <!-- 联系方式 -->
@@ -348,13 +414,26 @@
       <a href="https://yuque.com/wwk-ai" target="_blank" class="social-link" title="语雀">
         <svg fill="currentColor" viewBox="0 0 24 24"><path d="M21.5 2h-19A2.5 2.5 0 000 4.5v15A2.5 2.5 0 002.5 22h19a2.5 2.5 0 002.5-2.5v-15A2.5 2.5 0 0021.5 2zM12 18l-5-5h3V6h4v7h3L12 18z"/></svg>
       </a>
-      <a href="mailto:wwk@example.com" class="social-link" title="邮箱">
+      <a href="javascript:void(0)" class="social-link" title="微信" onclick="showWechatQR()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05a6.127 6.127 0 01-.235-1.676c0-3.665 3.373-6.633 7.534-6.633.254 0 .499.03.748.044C16.505 4.432 12.975 2.188 8.691 2.188zm-2.87 4.576a1.042 1.042 0 110 2.084 1.042 1.042 0 010-2.084zm5.743 0a1.042 1.042 0 110 2.084 1.042 1.042 0 010-2.084zM24 14.893c0-3.236-3.166-5.859-7.073-5.859-3.907 0-7.073 2.623-7.073 5.86 0 3.236 3.166 5.858 7.073 5.858.753 0 1.477-.106 2.16-.3a.72.72 0 01.596.08l1.613.943a.276.276 0 00.141.047.248.248 0 00.244-.248c0-.06-.024-.12-.04-.178l-.331-1.252a.496.496 0 01.178-.558C23.014 18.388 24 16.775 24 14.893zm-9.534-1.042a.87.87 0 110 1.74.87.87 0 010-1.74zm4.922 0a.87.87 0 110 1.74.87.87 0 010-1.74z"/></svg>
+      </a>
+      <a href="mailto:weiwk01@126.com" class="social-link" title="邮箱">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       </a>
     </div>
 
     <div class="footer">
       Wesley AI Lab &copy; 2020-2026
+    </div>
+  </div>
+
+  <!-- 微信二维码弹窗 -->
+  <div class="qr-modal-overlay" id="qrModal" onclick="hideWechatQR(event)">
+    <div class="qr-modal" onclick="event.stopPropagation()">
+      <h3>微信扫码添加</h3>
+      <img src="/images/wechat-qrcode.jpg" alt="微信二维码">
+      <p>微信号: weiwenke</p>
+      <button class="close-btn" onclick="hideWechatQR()">关闭</button>
     </div>
   </div>
 
@@ -398,6 +477,17 @@
         document.body.appendChild(p);
       }
     })();
+
+    // 微信二维码弹窗
+    function showWechatQR() {
+      document.getElementById('qrModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function hideWechatQR(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('qrModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
   </script>
 </body>
 </html>
