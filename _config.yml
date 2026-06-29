@@ -16,7 +16,7 @@ timezone: Asia/Shanghai
 # 网站地址配置
 url: https://wwk-ai.github.io
 root: /
-permalink: posts/:abbrlink/  # 使用短链接，美观且利于SEO
+permalink: posts/:year/:month/:title/  # 年/月/标题格式，美观且利于SEO
 permalink_defaults:
 pretty_urls:
   trailing_index: false
@@ -127,12 +127,6 @@ sitemap:
   rel: false
   tags: true
   categories: true
-
-# abbrlink 短链接（需安装 hexo-abbrlink 插件，可选）
-# 若不需要可删除此段
-abbrlink:
-  alg: crc32
-  rep: hex
 
 # ============================================================
 # 安全与忽略
