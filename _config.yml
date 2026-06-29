@@ -128,6 +128,16 @@ sitemap:
   tags: true
   categories: true
 
+# 自定义样式注入（防止导航栏文字换行）
+import:
+  head_begin:
+    - |
+      <style>
+        .nav-main a, .nav-main .nav-item, .nav-sub .nav-item {
+          white-space: nowrap !important;
+        }
+      </style>
+
 # ============================================================
 # 安全与忽略
 # ============================================================

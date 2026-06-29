@@ -1,4 +1,4 @@
----
+﻿---
 title: "RAG架构深度解析：从向量检索到企业级知识库"
 date: 2024-06-26 16:20:00
 tags:
@@ -12,7 +12,7 @@ keywords: RAG架构, 向量检索, 知识库, LangChain, Embedding, Milvus
 description: "从零构建企业级RAG（检索增强生成）系统，详解文档切分策略、Embedding选型、向量数据库对比及混合检索优化方案。"
 comments: true
 toc: true
-cover: https://picsum.photos/seed/ragarch/1200/600
+headimg: https://picsum.photos/seed/ragarch/1200/600
 ---
 
 ## RAG核心流程

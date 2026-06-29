@@ -1,4 +1,4 @@
----
+﻿---
 title: "从零搭建企业级技术博客：Hexo 7 + Volantis 6 + GitHub Pages 完整实战记录"
 date: 2026-06-29 10:00:00
 updated: 2026-06-29 18:00:00
@@ -14,7 +14,7 @@ keywords: Hexo博客搭建, Volantis主题, GitHub Pages, GitHub Actions, 技术
 description: "完整记录使用 Hexo 7.x + Volantis 6.x + GitHub Pages 从零搭建企业级技术博客的全过程，包含踩坑实录、CI/CD配置、主题定制与部署优化。"
 comments: true
 toc: true
-cover: https://picsum.photos/seed/hexoblog/1200/600
+headimg: https://picsum.photos/seed/hexoblog/1200/600
 ---
 
 ## 背景
@@ -298,7 +298,7 @@ categories:
 description: "文章摘要"
 comments: true
 toc: true
-cover: https://example.com/cover.jpg
+headimg: https://example.com/cover.jpg
 ---
 ```
 

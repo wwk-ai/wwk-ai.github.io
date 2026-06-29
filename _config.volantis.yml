@@ -24,7 +24,7 @@ navbar:
       icon: fa-solid fa-home
       url: /
     - name: AI专栏
-      icon: fa-solid fa-brain
+      icon: fa-solid fa-robot
       url: /ai-column/
     - name: Java专栏
       icon: fa-brands fa-java

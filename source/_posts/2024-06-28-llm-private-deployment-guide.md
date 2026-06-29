@@ -1,4 +1,4 @@
----
+﻿---
 title: "企业级LLM私有化部署实战：从Ollama到vLLM"
 date: 2024-06-28 14:30:00
 tags:
@@ -12,7 +12,7 @@ keywords: LLM私有化部署, Ollama, vLLM, 企业级AI, 大模型推理
 description: "详解如何从零搭建企业级LLM私有化部署方案，对比Ollama与vLLM两大推理框架，涵盖硬件选型、性能调优与生产环境踩坑实录。"
 comments: true
 toc: true
-cover: https://picsum.photos/seed/llmdeploy/1200/600
+headimg: https://picsum.photos/seed/llmdeploy/1200/600
 ---
 
 ## 为什么需要私有化部署？
