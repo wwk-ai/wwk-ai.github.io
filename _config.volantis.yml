@@ -1,0 +1,435 @@
+# ============================================================
+# Volantis 主题配置文件 _config.volantis.yml
+# 适配：企业级AI/Java技术博主 | 深色科技风格
+# 覆盖优先级高于 node_modules/hexo-theme-volantis/_config.yml
+# ============================================================
+
+# 调试模式
+debug: false
+
+# 内容可见性优化
+content_visibility: true
+
+# ============================================================
+# 导航栏配置
+# ============================================================
+navbar:
+  visiable: auto
+  logo:
+    img: ''
+    icon: fa-solid fa-microchip
+    title: 'Wesley AI Lab'
+  menu:
+    - name: 首页
+      icon: fa-solid fa-home
+      url: /
+    - name: AI专栏
+      icon: fa-solid fa-brain
+      url: /ai-column/
+    - name: Java专栏
+      icon: fa-brands fa-java
+      url: /java-column/
+    - name: 项目作品
+      icon: fa-solid fa-laptop-code
+      url: /projects/
+    - name: 友链
+      icon: fa-solid fa-link
+      url: /friends/
+    - name: 关于
+      icon: fa-solid fa-user
+      url: /about/
+    - name: 留言
+      icon: fa-solid fa-comments
+      url: /guestbook/
+    - name: 更多
+      icon: fa-solid fa-ellipsis-h
+      rows:
+        - name: 归档
+          icon: fa-solid fa-archive
+          url: /archives/
+        - name: 标签
+          icon: fa-solid fa-tags
+          url: /tags/
+        - name: 分类
+          icon: fa-solid fa-folder-open
+          url: /categories/
+        - name: hr
+        - name: 语雀主页
+          icon: fa-solid fa-book
+          url: https://yuque.com/wwk-ai
+          target: _blank
+        - name: hr
+        - name: 暗黑模式
+          icon: fa-solid fa-moon
+          toggle: darkmode
+
+# ============================================================
+# 封面配置（首页Hero区域）
+# ============================================================
+cover:
+  # height_scheme: half
+  title: 'Wesley AI Lab'
+  subtitle: '企业级AI大模型与Java后端技术实战'
+  background: https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1920&auto=format&fit=crop
+  features:
+    - name: AI专栏
+      img: volantis-static/media/twemoji/assets/svg/1f9e0.svg
+      url: /ai-column/
+    - name: Java专栏
+      img: volantis-static/media/twemoji/assets/svg/2615.svg
+      url: /java-column/
+    - name: 项目作品
+      img: volantis-static/media/twemoji/assets/svg/1f4bb.svg
+      url: /projects/
+    - name: 归档
+      img: volantis-static/media/twemoji/assets/svg/1f5c3.svg
+      url: /archives/
+    - name: 关于我
+      img: volantis-static/media/twemoji/assets/svg/1f464.svg
+      url: /about/
+    - name: 语雀
+      img: volantis-static/media/twemoji/assets/svg/1f4d6.svg
+      url: https://yuque.com/wwk-ai
+      target: _blank
+
+# ============================================================
+# 文章列表配置
+# ============================================================
+article:
+  preview:
+    scheme: landscape
+    pin_icon: volantis-static/media/twemoji/assets/svg/1f4cc.svg
+    auto_title: false
+    auto_excerpt: true
+    author: true
+    readmore: auto
+  body:
+    top_meta: [author, category, date, wordcount]
+    bottom_meta: [updated, tags, share]
+    meta_library:
+      author:
+        avatar: ''
+        name: Wesley
+        url: /about/
+      wordcount:
+        icon: fa-solid fa-pen-nib
+        unit: 字
+      updated:
+        title: '更新于：'
+        icon: fa-solid fa-sync-alt
+
+# ============================================================
+# 评论系统配置（留空，按需启用）
+# ============================================================
+comments:
+  service: ''
+  # 可选: giscus / disqus / valine / utterances / beaudar
+  # giscus:
+  #   repo: wesleywwk/blog-comments
+  #   repo-id: ''
+  #   category: Announcements
+  #   category-id: ''
+  #   mapping: pathname
+  #   reactions-enabled: '1'
+  #   emit-metadata: '0'
+  #   lang: zh-CN
+  #   input-position: top
+
+# ============================================================
+# 侧边栏配置
+# ============================================================
+sidebar:
+  for_page: [blogger, category, tagcloud, guide]
+  for_post: [toc]
+  widget_library:
+    # 博主信息卡（使用 blogger class，Volantis 6.x 内置）
+    blogger:
+      class: blogger
+      display: [desktop, mobile]
+      sticky: true
+      header:
+        icon: fa-solid fa-user-circle
+        title: 博主
+      avatar:
+      name: Wesley
+      url: /about/
+      description: 'AI大模型落地 | Java后端架构 | 企业级实战'
+
+    # 文章目录
+    toc:
+      class: toc
+      display: [desktop]
+      header:
+        icon: fa-solid fa-list
+        title: 本文目录
+      list_number: true
+      min_depth: 2
+      max_depth: 4
+
+    # 分类
+    category:
+      class: category
+      display: [desktop, mobile]
+      header:
+        icon: fa-solid fa-folder-open
+        title: 文章分类
+      min_count: 1
+
+    # 标签云
+    tagcloud:
+      class: tagcloud
+      display: [desktop, mobile]
+      header:
+        icon: fa-solid fa-tags
+        title: 热门标签
+      min_count: 1
+      amount: 20
+
+    # 导航向导
+    guide:
+      class: grid
+      display: [desktop, mobile]
+      header:
+        icon: fa-solid fa-map-signs
+        title: 快速导航
+      rows:
+        - name: AI专栏
+          icon: fa-solid fa-brain
+          url: /ai-column/
+        - name: Java专栏
+          icon: fa-brands fa-java
+          url: /java-column/
+        - name: 项目作品
+          icon: fa-solid fa-laptop-code
+          url: /projects/
+        - name: 语雀主页
+          icon: fa-solid fa-book
+          url: https://yuque.com/wwk-ai
+          target: _blank
+
+    # 近期文章（使用 list class，Volantis 6.x 内置）
+    post:
+      class: list
+      display: [desktop, mobile]
+      header:
+        icon: fa-solid fa-clock
+        title: 近期文章
+      amount: 5
+
+# ============================================================
+# 页脚配置
+# ============================================================
+site_footer:
+  layout: [social, source, analytics, copyright]
+  copyright: 'Copyright © 2020-2026 Wesley AI Lab'
+  social:
+    - icon: fa-brands fa-github
+      url: https://github.com/wesleywwk
+    - icon: fa-solid fa-book
+      url: https://yuque.com/wwk-ai
+    - icon: fa-solid fa-rss
+      url: atom.xml
+  source:
+    - name: Hexo
+      url: https://hexo.io/
+    - name: Volantis
+      url: https://volantis.js.org/
+  analytics: |
+    <span id="busuanzi_container_site_pv">
+      本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    <span id="busuanzi_container_site_uv">
+      | 访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+
+# ============================================================
+# 插件配置
+# ============================================================
+plugins:
+  clipboard:
+    enable: true
+  fontawesome: volantis-static/libs/@fortawesome/fontawesome-free/css/all.min.css
+  parallax:
+    enable: true
+  busuanzi:
+    enable: true
+  aplayer:
+    enable: false
+  message:
+    enable: true
+    copyright:
+      enable: true
+      title: '知识共享许可协议'
+      message: '转载请注明原作者及出处。'
+      icon: 'fa-brands fa-creative-commons light-blue'
+  darkmode:
+    enable: true
+  scrollreveal:
+    enable: true
+
+# ============================================================
+# 自定义CSS - 深色科技风格
+# ============================================================
+custom_css:
+  max_width: 1200px
+  font_smoothing: true
+  cursor:
+    enable: false
+  navbar:
+    height: 64px
+    width: auto
+    effect: [shadow, blur]
+  scrollbar:
+    size: 4px
+    border: 2px
+    color: '#3dd9b6'
+    hover: '#ff5722'
+  sidebar:
+    effect: [shadow]
+  body:
+    effect: [shadow]
+    highlight:
+      language: true
+      copy_btn: true
+    text_align:
+      h1: left
+      h2: left
+      h3: left
+      h4: left
+      p: justify
+  gap:
+    h2: 48px
+    h3: 24px
+    h4: 16px
+    p: 1em
+    line_height: 1.8
+  fontfamily:
+    logofont:
+      fontfamily: '"Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial'
+      name: 'Varela Round'
+      url: volantis-static/media/fonts/VarelaRound/VarelaRound-Regular.ttf
+      weight: normal
+      style: normal
+    bodyfont:
+      fontfamily: '"PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif'
+      name: 'PingFang SC'
+      weight: normal
+      style: normal
+    codefont:
+      fontfamily: 'Menlo, Monaco, Consolas, "Courier New", monospace'
+      name: 'Menlo'
+      weight: normal
+      style: normal
+
+  # 深色科技配色方案
+  color_scheme:
+    common:
+      theme: '#3dd9b6'
+      link: '#2092ec'
+      button: '#44D7B6'
+      hover: '#ff5722'
+      inner: '#fff'
+      selection: 'alpha(#3dd9b6, 0.2)'
+    light:
+      site_bg: '#f4f4f4'
+      site_inner: '#fff'
+      site_footer: '#666'
+      card: '#fff'
+      text: '#444'
+      block: '#f6f6f6'
+      codeblock: '#f8f8f8'
+      inlinecode: '#c74f00'
+      h1: '#1a1a1a'
+      h2: '#1a1a1a'
+      h3: '#333'
+      h4: '#444'
+      h5: '#555'
+      h6: '#666'
+      p: '#444'
+      list: '#666'
+      list_hl: 'mix($color-theme, #000, 80)'
+      meta: '#888'
+      copyright_bkg: '#f5f5f5'
+    dark:
+      site_bd: '#0d1117'
+      site_bg: '#161b22'
+      card: '#21262d'
+      site_inner: '#eeeeeede'
+      site_footer: '#aaaaaade'
+      text: '#eeeeeede'
+      block: '#2d333b'
+      codeblock: '#161b22'
+      inlinecode: '#D56D28'
+      h1: '#FFFFFFde'
+      h2: '#FFFFFFde'
+      h3: '#FFFFFF99'
+      h4: '#FFFFFF99'
+      h5: '#FFFFFF99'
+      h6: '#FFFFFF99'
+      p: '#d9d9d9de'
+      list: '#d9d9d9de'
+      list_hl: 'mix($color-theme, #fff, 80)'
+      meta: '#bfbfbfde'
+      copyright_bkg: '#0d1117'
+      brightness: 70%
+
+# ============================================================
+# 右键菜单
+# ============================================================
+rightmenus:
+  enable: true
+  order:
+    - plugins.navigation
+    - hr
+    - plugins.inputBox
+    - plugins.seletctText
+    - plugins.elementCheck
+    - plugins.elementImage
+    - hr
+    - menus.links
+    - hr
+    - menus.darkMode
+    - hr
+    - plugins.articlePage
+  options:
+    iconPrefix: fa-solid
+    articleShowLink: true
+  plugins:
+    navigation:
+      - {id: 'left', name: '转到上一页', icon: 'fa-solid fa-arrow-left', event: 'history.back()', group: 'navigation'}
+      - {id: 'right', name: '转到下一页', icon: 'fa-solid fa-arrow-right', event: 'history.forward()', group: 'navigation'}
+      - {id: 'redo', name: '刷新当前页面', icon: 'fa-solid fa-redo', event: 'window.location.reload()', group: 'navigation'}
+      - {id: 'up', name: '回到顶部', icon: 'fa-solid fa-arrow-up', event: 'VolantisApp.scrolltoElement(volantis.dom.bodyAnchor)', group: 'navigation'}
+    articlePage:
+      - {id: 'printMode', name: '打印页面', icon: 'fa-solid fa-print', event: 'printMode', group: 'articlePage'}
+      - {id: 'readMode', name: '阅读模式', icon: 'fa-solid fa-book-open', event: 'readMode', group: 'articlePage'}
+    inputBox:
+      - {id: 'copyPaste', name: '粘贴文本', icon: 'fa-solid fa-paste', event: 'copyPaste', group: 'inputBox'}
+      - {id: 'copyAll', name: '全选文本', icon: 'fa-solid fa-object-ungroup', event: 'copyAll', group: 'inputBox'}
+      - {id: 'copyCut', name: '剪切文本', icon: 'fa-solid fa-cut', event: 'copyCut', group: 'inputBox'}
+    seletctText:
+      - {id: 'copyText', name: '复制文本', icon: 'fa-solid fa-copy', event: 'copyText', group: 'seletctText'}
+      - {id: 'searchWord', name: '站内搜索', icon: 'fa-solid fa-search', event: 'OpenSearch(__text__)', group: 'seletctText'}
+      - {id: 'bingSearch', name: '必应搜索', icon: 'fa-solid fa-search', event: 'window.open(`https://cn.bing.com/search?q=${__text__}`)', group: 'seletctText'}
+    elementCheck:
+      - {id: 'openTab', name: '新标签页打开', icon: 'fa-solid fa-external-link-square-alt', event: 'window.open(__link__)', group: 'elementCheck'}
+      - {id: 'copyLink', name: '复制链接地址', icon: 'fa-solid fa-link', event: 'copyLink', group: 'elementCheck'}
+    elementImage:
+      - {id: 'copyImg', name: '复制图片', icon: 'fa-solid fa-image', event: 'copyImg', group: 'elementImage'}
+      - {id: 'googleImg', name: '谷歌识图', icon: 'fa-solid fa-images', event: 'window.open(`https://www.google.com/searchbyimage?image_url=${__link__}`)', group: 'elementImage'}
+  menus:
+    links:
+      - {id: 'home', name: '回到首页', icon: 'fa-solid fa-home', link: '/', group: 'link'}
+      - {id: 'archives', name: '文章归档', icon: 'fa-solid fa-archive', link: '/archives/', group: 'link'}
+      - {id: 'yuque', name: '语雀主页', icon: 'fa-solid fa-book', link: 'https://yuque.com/wwk-ai', group: 'link'}
+      - hr
+      - {id: 'github', name: 'GitHub', icon: 'fa-brands fa-github', link: 'https://github.com/wesleywwk', group: 'link'}
+    darkMode:
+      - {id: 'darkMode', name: '暗黑模式', icon: 'fa-solid fa-moon', event: 'volantis.dark.toggle()', group: 'darkMode'}
+
+# ============================================================
+# 标签插件样式
+# ============================================================
+tag_plugins:
+  note:
+    iconfont: 'Font Awesome 6 Free'

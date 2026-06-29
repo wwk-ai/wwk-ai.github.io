@@ -1,0 +1,140 @@
+# ============================================================
+# 站点全局配置 _config.yml
+# 适配：wesleywwk.github.io | 企业级AI/Java技术博客
+# Hexo 7.x + Volantis 6.x/7.x 主题
+# ============================================================
+
+# 网站基础信息
+title: "Wesley AI Lab"
+subtitle: "企业级AI大模型与Java后端技术实战"
+description: "聚焦AI大模型落地、Java高并发架构、Spring生态与云原生技术，分享企业级实战方案与源码解析。配套语雀主页：yuque.com/wwk-ai"
+keywords: "AI大模型, Java后端, Spring Boot, 技术博客, 企业级架构, 云原生, 深度学习"
+author: "Wesley"
+language: zh-CN
+timezone: Asia/Shanghai
+
+# 网站地址配置
+url: https://wesleywwk.github.io
+root: /
+permalink: posts/:abbrlink/  # 使用短链接，美观且利于SEO
+permalink_defaults:
+pretty_urls:
+  trailing_index: false
+  trailing_html: false
+
+# 目录结构配置
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: lang
+skip_render:
+
+# 写作配置
+new_post_name: :year:month:day-:title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: false  # Volantis主题接管代码高亮
+  line_number: false
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  enable: false
+
+# 搜索配置
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
+
+# 首页分页
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+
+# 分类与标签
+category_generator:
+  per_page: 10
+  order_by: -date
+tag_generator:
+  per_page: 10
+  order_by: -date
+
+# 归档
+archive_generator:
+  per_page: 20
+  yearly: true
+  monthly: true
+  order_by: -date
+
+# 时间日期格式
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: mtime
+
+# 分页设置
+per_page: 10
+pagination_dir: page
+
+# 主题配置
+# Volantis 6.x 稳定版（通过npm安装）
+theme: volantis
+
+# 主题配置覆盖文件（Hexo 5.0+ 支持）
+# 优先使用 _config.volantis.yml 覆盖主题默认配置
+
+# 部署配置（方案A：本地一键部署，可选）
+deploy:
+  type: git
+  repo: git@github.com:wesleywwk/wesleywwk.github.io.git
+  branch: gh-pages
+  message: "deploy: {{ now('YYYY-MM-DD HH:mm:ss') }}"
+
+# Feed 订阅配置
+feed:
+  enable: true
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+  template:
+
+# Sitemap SEO
+sitemap:
+  path: sitemap.xml
+  rel: false
+  tags: true
+  categories: true
+
+# abbrlink 短链接（需安装 hexo-abbrlink 插件，可选）
+# 若不需要可删除此段
+abbrlink:
+  alg: crc32
+  rep: hex
+
+# ============================================================
+# 安全与忽略
+# ============================================================
+ignore:
