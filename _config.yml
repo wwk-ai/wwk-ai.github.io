@@ -167,10 +167,9 @@ import:
           50% { opacity: 0; }
         }
       </style>
-  body_end:
     - |
-      <script>
-        (function() {
+      <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
           const subtitleEl = document.querySelector('.cover-body .subtitle');
           if (!subtitleEl) return;
           const text = 'Java全栈技术实战';
@@ -197,7 +196,7 @@ import:
             setTimeout(type, delay);
           }
           type();
-        })();
+        });
       </script>
 
 # ============================================================
