@@ -14,7 +14,7 @@ language: zh-CN
 timezone: Asia/Shanghai
 
 # 网站地址配置
-url: https://wesleywwk.github.io
+url: https://wwk-ai.github.io
 root: /
 permalink: posts/:abbrlink/  # 使用短链接，美观且利于SEO
 permalink_defaults:
@@ -102,7 +102,7 @@ theme: volantis
 # 部署配置（方案A：本地一键部署，可选）
 deploy:
   type: git
-  repo: git@github.com:wesleywwk/wesleywwk.github.io.git
+  repo: https://github.com/wwk-ai/wesleywwk.github.io.git
   branch: gh-pages
   message: "deploy: {{ now('YYYY-MM-DD HH:mm:ss') }}"
 
