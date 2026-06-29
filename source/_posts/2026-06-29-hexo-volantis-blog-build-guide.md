@@ -14,17 +14,31 @@ keywords: Hexo博客搭建, Volantis主题, GitHub Pages, GitHub Actions, 技术
 description: "完整记录使用 Hexo 7.x + Volantis 6.x + GitHub Pages 从零搭建企业级技术博客的全过程，包含踩坑实录、CI/CD配置、主题定制与部署优化。"
 comments: true
 toc: true
-cover: https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1200&auto=format&fit=crop
+cover: https://picsum.photos/seed/hexoblog/1200/600
 ---
 
 ## 背景
 
-我的旧博客始建于2020年，当时用的是 Volantis v2 主题（现已废弃），内容仅有几个静态HTML页面，年久失修。2026年决定彻底重建，目标是搭建一个**企业级AI/Java技术博客**，具备以下特性：
+### 为什么重建博客？
 
-- 现代化主题（Volantis 6.x）
-- GitHub Pages 免费托管
-- GitHub Actions 自动化 CI/CD
-- 深色/浅色双模式
+过去几年，我的技术内容一直写在**语雀**上。语雀确实好用，文档协作、知识库管理都很方便，但随着内容越来越多，几个痛点也逐渐暴露：
+
+- **无法打造个人IP**：语雀的文章链接是 `yuque.com/wwk-ai/xxx`，域名属于平台，不利于个人品牌沉淀
+- **年年付费**：语雀的高级功能需要持续付费，内容托管在别人的平台上，没有完全的自主权
+- **样式受限**：语雀的页面定制能力有限，无法像独立博客那样自由设计主题、布局、交互
+- **SEO 差**：语雀的内容在搜索引擎中的权重远不如独立域名站点
+
+于是，2026年6月，我决定彻底重建独立博客。我的旧博客始建于2020年，当时用的是 Volantis v2 主题（现已废弃），内容仅有几个静态HTML页面，年久失修。这次重建的目标是：
+
+> **把语雀上的技术内容全部迁移过来，打造一个完全属于自己的、可长期维护的技术品牌阵地。**
+
+新博客定位为一个**企业级AI/Java技术博客**，具备以下特性：
+
+- 现代化主题（Volantis 6.x），支持深色/浅色双模式
+- GitHub Pages 免费托管，零成本运维
+- GitHub Actions 自动化 CI/CD，push 即部署
+- 自定义域名与个人品牌（`wwk-ai.github.io`）
+- 完整的 SEO 支持（sitemap、structured data）
 - 响应式设计，移动端友好
 
 ## 技术栈选型

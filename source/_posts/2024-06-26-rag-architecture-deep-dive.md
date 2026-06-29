@@ -12,7 +12,7 @@ keywords: RAG架构, 向量检索, 知识库, LangChain, Embedding, Milvus
 description: "从零构建企业级RAG（检索增强生成）系统，详解文档切分策略、Embedding选型、向量数据库对比及混合检索优化方案。"
 comments: true
 toc: true
-cover: https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop
+cover: https://picsum.photos/seed/ragarch/1200/600
 ---
 
 ## RAG核心流程

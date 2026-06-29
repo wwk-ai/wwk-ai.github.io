@@ -108,7 +108,7 @@ article:
     bottom_meta: [updated, tags, share]
     meta_library:
       author:
-        avatar: ''
+        avatar: https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png
         name: Wesley
         url: /about/
       wordcount:
@@ -146,7 +146,7 @@ sidebar:
     blogger:
       class: blogger
       display: [desktop, mobile]
-      avatar: ''
+      avatar: https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png
       shape: circle
       url: /about/
       title: Wesley
