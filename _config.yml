@@ -102,7 +102,7 @@ theme: volantis
 # 部署配置（方案A：本地一键部署，可选）
 deploy:
   type: git
-  repo: https://github.com/wwk-ai/wesleywwk.github.io.git
+  repo: https://github.com/wwk-ai/wwk-ai.github.io.git
   branch: gh-pages
   message: "deploy: {{ now('YYYY-MM-DD HH:mm:ss') }}"
 

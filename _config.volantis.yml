@@ -142,18 +142,23 @@ sidebar:
   for_page: [blogger, category, tagcloud, guide]
   for_post: [toc]
   widget_library:
-    # 博主信息卡（使用 blogger class，Volantis 6.x 内置）
+    # 博主信息卡
     blogger:
       class: blogger
       display: [desktop, mobile]
-      sticky: true
-      header:
-        icon: fa-solid fa-user-circle
-        title: 博主
-      avatar:
-      name: Wesley
+      avatar: ''
+      shape: circle
       url: /about/
-      description: 'AI大模型落地 | Java后端架构 | 企业级实战'
+      title: Wesley
+      subtitle: 'AI大模型落地 | Java后端架构 | 企业级实战'
+      jinrishici: false
+      social:
+        - icon: fa-brands fa-github
+          url: https://github.com/wwk-ai
+        - icon: fa-solid fa-book
+          url: https://yuque.com/wwk-ai
+        - icon: fa-solid fa-rss
+          url: /atom.xml
 
     # 文章目录
     toc:
@@ -207,13 +212,14 @@ sidebar:
           url: https://yuque.com/wwk-ai
           target: _blank
 
-    # 近期文章（使用 list class，Volantis 6.x 内置）
+    # 近期文章
     post:
       class: list
       display: [desktop, mobile]
       header:
         icon: fa-solid fa-clock
         title: 近期文章
+      type: post
       amount: 5
 
 # ============================================================
