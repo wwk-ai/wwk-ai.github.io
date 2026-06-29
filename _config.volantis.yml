@@ -23,6 +23,9 @@ navbar:
     - name: 首页
       icon: fa-solid fa-home
       url: /
+    - name: 博客
+      icon: fa-solid fa-book-open
+      url: /blog/
     - name: AI专栏
       icon: fa-solid fa-robot
       url: /ai-column/
