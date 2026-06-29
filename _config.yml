@@ -128,7 +128,7 @@ sitemap:
   tags: true
   categories: true
 
-# 自定义样式注入（防止导航栏文字换行）
+# 自定义样式注入
 import:
   head_begin:
     - |
@@ -136,7 +136,69 @@ import:
         .nav-main a, .nav-main .nav-item, .nav-sub .nav-item {
           white-space: nowrap !important;
         }
+        .cover-body .subtitle {
+          font-size: 1.25rem;
+          font-weight: 500;
+          min-height: 1.5em;
+        }
+        .cover-body .subtitle .typewriter-text {
+          background: linear-gradient(90deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #667eea 100%);
+          background-size: 300% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradient-flow 3s linear infinite;
+        }
+        @keyframes gradient-flow {
+          0% { background-position: 0% center; }
+          100% { background-position: 300% center; }
+        }
+        .typewriter-cursor {
+          display: inline-block;
+          width: 3px;
+          height: 1em;
+          background: linear-gradient(180deg, #ff6b6b, #4ecdc4);
+          margin-left: 4px;
+          animation: blink 0.8s infinite;
+          vertical-align: middle;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
       </style>
+  body_end:
+    - |
+      <script>
+        (function() {
+          const subtitleEl = document.querySelector('.cover-body .subtitle');
+          if (!subtitleEl) return;
+          const text = 'Java全栈技术实战';
+          subtitleEl.innerHTML = '<span class="typewriter-text"></span><span class="typewriter-cursor"></span>';
+          const textSpan = subtitleEl.querySelector('.typewriter-text');
+          let charIndex = 0;
+          let isDeleting = false;
+          function type() {
+            if (isDeleting) {
+              textSpan.textContent = text.substring(0, charIndex - 1);
+              charIndex--;
+            } else {
+              textSpan.textContent = text.substring(0, charIndex + 1);
+              charIndex++;
+            }
+            let delay = isDeleting ? 100 : 150;
+            if (!isDeleting && charIndex === text.length) {
+              isDeleting = true;
+              delay = 2000;
+            } else if (isDeleting && charIndex === 0) {
+              isDeleting = false;
+              delay = 500;
+            }
+            setTimeout(type, delay);
+          }
+          type();
+        })();
+      </script>
 
 # ============================================================
 # 安全与忽略
