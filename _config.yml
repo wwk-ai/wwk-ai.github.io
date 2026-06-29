@@ -199,6 +199,52 @@ import:
         });
       </script>
 
+  body_end:
+    - |
+      <script>
+        // Giscus 评论系统 (Volantis 6.x 无内置giscus支持，手动注入)
+        document.addEventListener('DOMContentLoaded', function() {
+          // 仅在有 #giscus-container 的页面加载评论
+          var container = document.getElementById('giscus-container');
+          if (!container) return;
+
+          var theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+          var script = document.createElement('script');
+          script.src = 'https://giscus.app/client.js';
+          script.setAttribute('data-repo', 'wwk-ai/wwk-ai.github.io');
+          script.setAttribute('data-repo-id', 'MDEwOlJlcG9zaXRvcnkyNjY1MzE0MjU=');
+          script.setAttribute('data-category', 'Announcements');
+          script.setAttribute('data-category-id', 'DIC_kwDOD-LyYc4CQPaP');
+          script.setAttribute('data-mapping', 'pathname');
+          script.setAttribute('data-strict', '0');
+          script.setAttribute('data-reactions-enabled', '1');
+          script.setAttribute('data-emit-metadata', '0');
+          script.setAttribute('data-input-position', 'top');
+          script.setAttribute('data-theme', theme);
+          script.setAttribute('data-lang', 'zh-CN');
+          script.setAttribute('data-loading', 'lazy');
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          container.appendChild(script);
+
+          // 监听暗黑模式切换
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(m) {
+              if (m.attributeName === 'data-theme') {
+                var newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+                var iframe = document.querySelector('iframe.giscus-frame');
+                if (iframe) {
+                  iframe.contentWindow.postMessage({
+                    giscus: { setConfig: { theme: newTheme } }
+                  }, 'https://giscus.app');
+                }
+              }
+            });
+          });
+          observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        });
+      </script>
+
 # ============================================================
 # 安全与忽略
 # ============================================================
