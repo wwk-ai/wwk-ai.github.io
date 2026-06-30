@@ -220,12 +220,9 @@ site_footer:
     - name: Volantis
       url: https://volantis.js.org/
   analytics: |
-    <span id="busuanzi_container_site_pv">
-      本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
-    </span>
-    <span id="busuanzi_container_site_uv">
-      | 访客数 <span id="busuanzi_value_site_uv"></span> 人
-    </span>
+    <span>本站总访问量 <span id="site-pv">--</span> 次</span>
+    <span>| 访客数 <span id="site-uv">--</span> 人</span>
+    <script src="/js/site-counter.js"></script>
 
 # ============================================================
 # 插件配置

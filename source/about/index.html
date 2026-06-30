@@ -553,30 +553,11 @@
     </div>
     <div style="margin-bottom:10px;line-height:1.8;">本站使用 <a href="https://hexo.io/" target="_blank" style="color:#818cf8;">Hexo</a> 生成，使用 <a href="https://volantis.js.org/" target="_blank" style="color:#818cf8;">Volantis</a> 作为主题，您可以在 <a href="https://github.com/wwk-ai" target="_blank" style="color:#818cf8;">GitHub</a> 找到本站源码。</div>
     <div style="margin-bottom:10px;">
-      <span id="busuanzi_container_site_pv">本站总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
-      <span id="busuanzi_container_site_uv">| 访客数 <span id="busuanzi_value_site_uv"></span> 人</span>
+      <span>本站总访问量 <span id="site-pv">--</span> 次</span>
+      <span>| 访客数 <span id="site-uv">--</span> 人</span>
     </div>
     <div>Copyright &copy; 2020-2026 Wesley AI Lab</div>
   </footer>
-  <script>
-  // 从博客页获取统一统计数字（彻底解决缓存不一致问题）
-  (function() {
-    fetch('/blog/')
-      .then(function(r) { return r.text(); })
-      .then(function(html) {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(html, 'text/html');
-        var pv = doc.getElementById('busuanzi_value_site_pv');
-        var uv = doc.getElementById('busuanzi_value_site_uv');
-        var pvEl = document.getElementById('busuanzi_value_site_pv');
-        var uvEl = document.getElementById('busuanzi_value_site_uv');
-        if (pv && pvEl) pvEl.textContent = pv.textContent;
-        if (uv && uvEl) uvEl.textContent = uv.textContent;
-      })
-      .catch(function() {
-        // fallback: 保持原样
-      });
-  })();
-  </script>
+  <script src="/js/site-counter.js"></script>
 </body>
 </html>
