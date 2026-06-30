@@ -244,10 +244,26 @@
     .cta-social:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); }
 
     /* ========== FOOTER ========== */
-    .footer { padding: 32px 48px; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--text-tertiary); border-top: 1px solid rgba(0,0,0,0.04); }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-link { transition: color 0.2s; }
-    .footer-link:hover { color: var(--accent); }
+    .site-footer {
+      padding: 48px 24px 32px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      border-top: 1px solid rgba(0,0,0,0.04);
+    }
+    .footer-social {
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+      margin-bottom: 20px;
+    }
+    .footer-social a {
+      font-size: 18px; color: var(--text-tertiary); transition: color 0.2s;
+    }
+    .footer-social a:hover { color: var(--accent); }
+    .footer-source { margin-bottom: 12px; line-height: 1.8; }
+    .footer-source a { color: var(--accent); text-decoration: none; }
+    .footer-source a:hover { text-decoration: underline; }
+    .footer-analytics { margin-bottom: 12px; }
+    .footer-copyright { margin-top: 8px; }
 
     /* Reveal */
     .reveal { opacity: 0; transform: translateY(28px); transition: all 0.7s cubic-bezier(0.16,1,0.3,1); }
@@ -273,7 +289,6 @@
       .cta { padding: 72px 20px; }
       .cta-card { padding: 40px 24px; }
       .cta-title { font-size: 22px; }
-      .footer { flex-direction: column; gap: 14px; text-align: center; }
     }
   </style>
 </head>
@@ -468,14 +483,20 @@
   </section>
 
   <!-- ========== FOOTER ========== -->
-  <footer class="footer">
-    <span>&copy; 2020 - 2026 Wesley AI Lab</span>
-    <div class="footer-links">
-      <a href="/" class="footer-link">首页</a>
-      <a href="/blog/" class="footer-link">博客</a>
-      <a href="/about/" class="footer-link">关于</a>
-      <a href="/guestbook/" class="footer-link">留言</a>
+  <footer class="site-footer">
+    <div class="footer-social">
+      <a href="https://github.com/wwk-ai" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://yuque.com/wwk-ai" target="_blank" title="语雀"><i class="fa-solid fa-book"></i></a>
+      <a href="/atom.xml" title="RSS"><i class="fa-solid fa-rss"></i></a>
     </div>
+    <div class="footer-source">
+      本站使用 <a href="https://hexo.io/" target="_blank">Hexo</a> 生成，使用 <a href="https://volantis.js.org/" target="_blank">Volantis</a> 作为主题，您可以在 <a href="https://github.com/wwk-ai" target="_blank">GitHub</a> 找到本站源码。
+    </div>
+    <div class="footer-analytics">
+      <span id="busuanzi_container_site_pv">本站总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+      <span id="busuanzi_container_site_uv">| 访客数 <span id="busuanzi_value_site_uv"></span> 人</span>
+    </div>
+    <div class="footer-copyright">Copyright &copy; 2020-2026 Wesley AI Lab</div>
   </footer>
   <div id="giscus-container" style="max-width:800px;margin:0 auto;padding:40px 24px 80px;"></div>
 
@@ -520,5 +541,6 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(function(el) { observer.observe(el); });
   </script>
-</body>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  </body>
 </html>
