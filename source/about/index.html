@@ -504,15 +504,15 @@
           el.textContent = text.substring(0, ci + 1);
           ci++;
         }
-        let delay = isDeleting ? 50 : 110;
+        let delay = isDeleting ? 80 : 160;
         if (!isDeleting && ci === text.length) {
           isDeleting = true;
-          delay = 2200;
+          delay = 3000;
         } else if (isDeleting && ci === 0) {
           isDeleting = false;
           ti = (ti + 1) % texts.length;
           text = texts[ti];
-          delay = 400;
+          delay = 600;
         }
         setTimeout(type, delay);
       }
