@@ -318,6 +318,7 @@ import:
               '<span>Wesley AI Lab</span>' +
             '</a>' +
             '<div class="custom-nav-links">' +
+              '<a href="/" class="custom-nav-link">首页</a>' +
               '<a href="/blog/" class="custom-nav-link">博客</a>' +
               '<a href="/ai-column/" class="custom-nav-link">AI 专栏</a>' +
               '<a href="/java-column/" class="custom-nav-link">Java 专栏</a>' +
@@ -330,6 +331,7 @@ import:
             '<button class="custom-nav-mobile-toggle" id="customMobileToggle"><i class="fa-solid fa-bars"></i></button>' +
           '</nav>' +
           '<div class="custom-nav-mobile-menu" id="customMobileMenu">' +
+            '<a href="/"><i class="fa-solid fa-home"></i> 首页</a>' +
             '<a href="/blog/"><i class="fa-solid fa-book-open"></i> 博客</a>' +
             '<a href="/ai-column/"><i class="fa-solid fa-robot"></i> AI 专栏</a>' +
             '<a href="/java-column/"><i class="fa-brands fa-java"></i> Java 专栏</a>' +
