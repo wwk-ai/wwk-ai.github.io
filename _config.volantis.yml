@@ -220,21 +220,12 @@ site_footer:
     - name: Volantis
       url: https://volantis.js.org/
   analytics: |
-    <span>本站总访问量 <span id="site-pv">--</span> 次</span>
-    <span>| 访客数 <span id="site-uv">--</span> 人</span>
-    <script>
-    (function(){
-      fetch('https://api.countapi.xyz/hit/wwk-ai.github.io/visits')
-        .then(function(r){return r.json()})
-        .then(function(d){var e=document.getElementById('site-pv');if(e)e.textContent=d.value.toLocaleString()})
-        .catch(function(){});
-      var t=new Date().toISOString().slice(0,10);
-      fetch('https://api.countapi.xyz/hit/wwk-ai.github.io/uv-'+t)
-        .then(function(r){return r.json()})
-        .then(function(d){var e=document.getElementById('site-uv');if(e)e.textContent=d.value.toLocaleString()})
-        .catch(function(){});
-    })();
-    </script>
+    <span id="busuanzi_container_site_pv">
+      本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    <span id="busuanzi_container_site_uv">
+      | 访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
 
 # ============================================================
 # 插件配置
@@ -246,7 +237,7 @@ plugins:
   parallax:
     enable: true
   busuanzi:
-    enable: false
+    enable: true
   aplayer:
     enable: false
   message:
