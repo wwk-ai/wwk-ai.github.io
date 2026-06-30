@@ -323,8 +323,8 @@ import:
               '<a href="/java-column/" class="custom-nav-link">Java 专栏</a>' +
               '<a href="/projects/" class="custom-nav-link">项目作品</a>' +
               '<a href="/friends/" class="custom-nav-link">友链</a>' +
-              '<a href="/guestbook/" class="custom-nav-link">留言</a>' +
               '<a href="/about/" class="custom-nav-link">关于</a>' +
+              '<a href="/guestbook/" class="custom-nav-link">留言</a>' +
               '<a href="https://github.com/wwk-ai" target="_blank" class="custom-nav-link source-btn"><i class="fa-brands fa-github"></i> 源码</a>' +
             '</div>' +
             '<button class="custom-nav-mobile-toggle" id="customMobileToggle"><i class="fa-solid fa-bars"></i></button>' +
@@ -335,8 +335,8 @@ import:
             '<a href="/java-column/"><i class="fa-brands fa-java"></i> Java 专栏</a>' +
             '<a href="/projects/"><i class="fa-solid fa-laptop-code"></i> 项目作品</a>' +
             '<a href="/friends/"><i class="fa-solid fa-link"></i> 友链</a>' +
-            '<a href="/guestbook/"><i class="fa-solid fa-comments"></i> 留言</a>' +
             '<a href="/about/"><i class="fa-solid fa-user"></i> 关于</a>' +
+            '<a href="/guestbook/"><i class="fa-solid fa-comments"></i> 留言</a>' +
             '<a href="https://github.com/wwk-ai" target="_blank"><i class="fa-brands fa-github"></i> 源码</a>' +
           '</div>';
 
