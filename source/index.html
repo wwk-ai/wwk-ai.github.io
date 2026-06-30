@@ -542,5 +542,39 @@
     reveals.forEach(function(el) { observer.observe(el); });
   </script>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script>
+  // busuanzi 全站数字同步（所有页面共用同一套统计）
+  (function() {
+    function syncBusuanzi() {
+      var pvEl = document.getElementById('busuanzi_value_site_pv');
+      var uvEl = document.getElementById('busuanzi_value_site_uv');
+      if (!pvEl || !uvEl) return;
+      var pv = pvEl.textContent.trim();
+      var uv = uvEl.textContent.trim();
+      if (!pv || isNaN(parseInt(pv.replace(/,/g, '')))) return;
+      var storedPv = localStorage.getItem('busuanzi_site_pv') || '0';
+      var storedUv = localStorage.getItem('busuanzi_site_uv') || '0';
+      var currentPv = parseInt(pv.replace(/,/g, ''));
+      var currentUv = parseInt(uv.replace(/,/g, ''));
+      var maxPv = Math.max(currentPv, parseInt(storedPv) || 0);
+      var maxUv = Math.max(currentUv, parseInt(storedUv) || 0);
+      localStorage.setItem('busuanzi_site_pv', maxPv);
+      localStorage.setItem('busuanzi_site_uv', maxUv);
+      pvEl.textContent = maxPv.toLocaleString();
+      uvEl.textContent = maxUv.toLocaleString();
+    }
+    var checkTimer = setInterval(function() {
+      var pvEl = document.getElementById('busuanzi_value_site_pv');
+      if (pvEl && pvEl.textContent.trim() && !isNaN(parseInt(pvEl.textContent.trim().replace(/,/g, '')))) {
+        clearInterval(checkTimer);
+        syncBusuanzi();
+      }
+    }, 300);
+    setTimeout(function() {
+      clearInterval(checkTimer);
+      syncBusuanzi();
+    }, 3000);
+  })();
+  </script>
   </body>
 </html>
