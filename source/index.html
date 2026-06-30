@@ -493,8 +493,8 @@
       本站使用 <a href="https://hexo.io/" target="_blank">Hexo</a> 生成，使用 <a href="https://volantis.js.org/" target="_blank">Volantis</a> 作为主题，您可以在 <a href="https://github.com/wwk-ai" target="_blank">GitHub</a> 找到本站源码。
     </div>
     <div class="footer-analytics">
-      <span id="busuanzi_container_site_pv">本站总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
-      <span id="busuanzi_container_site_uv">| 访客数 <span id="busuanzi_value_site_uv"></span> 人</span>
+      <span>本站总访问量 <span id="site-pv">--</span> 次</span>
+      <span>| 访客数 <span id="site-uv">--</span> 人</span>
     </div>
     <div class="footer-copyright">Copyright &copy; 2020-2026 Wesley AI Lab</div>
   </footer>
@@ -541,6 +541,32 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(function(el) { observer.observe(el); });
   </script>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+    // 统一访问计数（countapi.xyz）
+    (function() {
+      fetch('https://api.countapi.xyz/hit/wwk-ai.github.io/visits')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var el = document.getElementById('site-pv');
+          if (el) el.textContent = data.value.toLocaleString();
+        })
+        .catch(function() {
+          var el = document.getElementById('site-pv');
+          if (el) el.textContent = '-';
+        });
+      // UV 用独立 key（每日去重）
+      var today = new Date().toISOString().slice(0,10);
+      fetch('https://api.countapi.xyz/hit/wwk-ai.github.io/uv-' + today)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var el = document.getElementById('site-uv');
+          if (el) el.textContent = data.value.toLocaleString();
+        })
+        .catch(function() {
+          var el = document.getElementById('site-uv');
+          if (el) el.textContent = '-';
+        });
+    })();
+  </script>
   </body>
 </html>
