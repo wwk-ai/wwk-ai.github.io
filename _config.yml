@@ -79,12 +79,12 @@ tag_generator:
   per_page: 10
   order_by: -date
 
-# 归档
-archive_generator:
-  per_page: 20
-  yearly: true
-  monthly: true
-  order_by: -date
+# 归档（已禁用）
+# archive_generator:
+#   per_page: 20
+#   yearly: true
+#   monthly: true
+#   order_by: -date
 
 # 时间日期格式
 date_format: YYYY-MM-DD

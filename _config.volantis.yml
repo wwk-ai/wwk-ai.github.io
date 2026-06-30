@@ -47,9 +47,6 @@ navbar:
     - name: 更多
       icon: fa-solid fa-ellipsis-h
       rows:
-        - name: 归档
-          icon: fa-solid fa-archive
-          url: /archives/
         - name: 标签
           icon: fa-solid fa-tags
           url: /tags/
@@ -409,7 +406,6 @@ rightmenus:
   menus:
     links:
       - {id: 'home', name: '回到首页', icon: 'fa-solid fa-home', link: '/', group: 'link'}
-      - {id: 'archives', name: '文章归档', icon: 'fa-solid fa-archive', link: '/archives/', group: 'link'}
       - {id: 'yuque', name: '语雀主页', icon: 'fa-solid fa-book', link: 'https://yuque.com/wwk-ai', group: 'link'}
       - hr
       - {id: 'github', name: 'GitHub', icon: 'fa-brands fa-github', link: 'https://github.com/wwk-ai', group: 'link'}
