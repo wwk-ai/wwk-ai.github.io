@@ -63,6 +63,7 @@
     .nav-brand {
       display: flex; align-items: center; gap: 12px;
       font-weight: 600; font-size: 18px; color: var(--text-primary);
+      flex-shrink: 0;
     }
     .nav-brand-icon {
       width: 36px; height: 36px; border-radius: 10px;
@@ -70,12 +71,13 @@
       display: flex; align-items: center; justify-content: center;
       color: white; font-size: 16px;
     }
-    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
     .nav-link {
-      padding: 8px 16px; border-radius: 10px;
+      padding: 8px 14px; border-radius: 10px;
       font-size: 14px; font-weight: 500;
       color: var(--text-secondary);
       transition: all 0.25s ease;
+      white-space: nowrap;
     }
     .nav-link:hover {
       color: var(--accent);
@@ -87,6 +89,47 @@
     .nav-link.primary:hover {
       background: var(--accent);
     }
+    .nav-actions {
+      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    }
+    .nav-icon-btn {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 16px; cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .nav-icon-btn:hover {
+      color: var(--accent);
+      border-color: rgba(99, 102, 241, 0.2);
+      background: var(--accent-glow);
+    }
+    /* Mobile menu */
+    .nav-mobile-toggle { display: none; }
+    .nav-mobile-menu {
+      display: none;
+      position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+      background: rgba(250, 250, 249, 0.96);
+      backdrop-filter: blur(20px);
+      padding: 24px 20px; z-index: 99;
+      flex-direction: column; gap: 4px;
+      overflow-y: auto;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 20px; border-radius: 14px;
+      font-size: 16px; font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .nav-mobile-menu a:hover {
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+    .nav-mobile-menu a i { width: 24px; text-align: center; color: var(--text-tertiary); }
 
     /* ========== HERO ========== */
     .hero {
@@ -569,7 +612,8 @@
     /* ========== RESPONSIVE ========== */
     @media (max-width: 900px) {
       .nav { padding: 0 20px; }
-      .nav-links { display: none; }
+      .nav-links, .nav-actions { display: none; }
+      .nav-mobile-toggle { display: flex; }
       .hero-title { font-size: 40px; }
       .hero-subtitle { font-size: 17px; }
       .hero-actions { flex-direction: column; }
@@ -598,12 +642,28 @@
       <a href="/blog/" class="nav-link">博客</a>
       <a href="/ai-column/" class="nav-link">AI 专栏</a>
       <a href="/java-column/" class="nav-link">Java 专栏</a>
+      <a href="/projects/" class="nav-link">项目作品</a>
+      <a href="/friends/" class="nav-link">友链</a>
+      <a href="/guestbook/" class="nav-link">留言</a>
       <a href="/about/" class="nav-link">关于</a>
-      <a href="https://github.com/wwk-ai" target="_blank" class="nav-link primary">
-        <i class="fa-brands fa-github"></i> GitHub
-      </a>
     </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" id="themeToggle" title="暗黑模式"><i class="fa-solid fa-moon"></i></button>
+      <a href="https://github.com/wwk-ai" target="_blank" class="nav-icon-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+    </div>
+    <button class="nav-mobile-toggle nav-icon-btn" id="mobileToggle" title="菜单"><i class="fa-solid fa-bars"></i></button>
   </nav>
+  <!-- Mobile menu -->
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a href="/blog/"><i class="fa-solid fa-book-open"></i> 博客</a>
+    <a href="/ai-column/"><i class="fa-solid fa-robot"></i> AI 专栏</a>
+    <a href="/java-column/"><i class="fa-brands fa-java"></i> Java 专栏</a>
+    <a href="/projects/"><i class="fa-solid fa-laptop-code"></i> 项目作品</a>
+    <a href="/friends/"><i class="fa-solid fa-link"></i> 友链</a>
+    <a href="/guestbook/"><i class="fa-solid fa-comments"></i> 留言</a>
+    <a href="/about/"><i class="fa-solid fa-user"></i> 关于</a>
+    <a href="https://github.com/wwk-ai" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+  </div>
 
   <!-- ========== HERO ========== -->
   <section class="hero">
@@ -841,6 +901,25 @@
       if (window.scrollY > 40) { nav.classList.add('scrolled'); }
       else { nav.classList.remove('scrolled'); }
     });
+
+    // Mobile menu toggle
+    (function() {
+      var toggle = document.getElementById('mobileToggle');
+      var menu = document.getElementById('mobileMenu');
+      if (toggle && menu) {
+        toggle.addEventListener('click', function() {
+          menu.classList.toggle('open');
+          var icon = toggle.querySelector('i');
+          icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+        });
+        menu.querySelectorAll('a').forEach(function(a) {
+          a.addEventListener('click', function() {
+            menu.classList.remove('open');
+            toggle.querySelector('i').className = 'fa-solid fa-bars';
+          });
+        });
+      }
+    })();
 
     // Reveal on scroll
     var reveals = document.querySelectorAll('.reveal');

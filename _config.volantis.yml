@@ -70,30 +70,13 @@ navbar:
 # 封面配置（首页Hero区域）
 # ============================================================
 cover:
-  # height_scheme: half
-  title: 'Wesley AI Lab'
-  subtitle: 'AI 企业级大模型落地｜Java 全栈｜Python 大数据实战'
+  title: '博客'
+  subtitle: '深度技术解析与工程化实战'
   background: ''
-  features:
-    - name: AI专栏
-      img: volantis-static/media/twemoji/assets/svg/1f9e0.svg
-      url: /ai-column/
-    - name: Java专栏
-      img: volantis-static/media/twemoji/assets/svg/2615.svg
-      url: /java-column/
-    - name: 项目作品
-      img: volantis-static/media/twemoji/assets/svg/1f4bb.svg
-      url: /projects/
-    - name: 归档
-      img: volantis-static/media/twemoji/assets/svg/1f5c3.svg
-      url: /archives/
-    - name: 关于我
-      img: volantis-static/media/twemoji/assets/svg/1f464.svg
-      url: /about/
-    - name: 语雀
-      img: volantis-static/media/twemoji/assets/svg/1f4d6.svg
-      url: https://yuque.com/wwk-ai
-      target: _blank
+  # features 已在首页展示，此处不重复
+  # features:
+  #   - name: AI专栏
+  #     ...
 
 # ============================================================
 # 文章列表配置
@@ -233,7 +216,7 @@ site_footer:
   copyright: 'Copyright © 2020-2026 Wesley AI Lab'
   social:
     - icon: fa-brands fa-github
-      url: https://github.com/wesleywwk
+      url: https://github.com/wwk-ai
     - icon: fa-solid fa-book
       url: https://yuque.com/wwk-ai
     - icon: fa-solid fa-rss
@@ -432,7 +415,7 @@ rightmenus:
       - {id: 'archives', name: '文章归档', icon: 'fa-solid fa-archive', link: '/archives/', group: 'link'}
       - {id: 'yuque', name: '语雀主页', icon: 'fa-solid fa-book', link: 'https://yuque.com/wwk-ai', group: 'link'}
       - hr
-      - {id: 'github', name: 'GitHub', icon: 'fa-brands fa-github', link: 'https://github.com/wesleywwk', group: 'link'}
+      - {id: 'github', name: 'GitHub', icon: 'fa-brands fa-github', link: 'https://github.com/wwk-ai', group: 'link'}
     darkMode:
       - {id: 'darkMode', name: '暗黑模式', icon: 'fa-solid fa-moon', event: 'volantis.dark.toggle()', group: 'darkMode'}
 
