@@ -217,6 +217,143 @@ import:
           observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
         });
       </script>
+    - |
+      <style>
+        /* 博客页统一导航 */
+        .custom-nav {
+          position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+          padding: 0 40px; height: 64px;
+          display: flex; align-items: center; justify-content: space-between;
+          background: rgba(10, 14, 39, 0.78);
+          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .custom-nav-brand {
+          display: flex; align-items: center; gap: 10px;
+          font-weight: 600; font-size: 16px; color: #e2e8f0;
+          text-decoration: none;
+        }
+        .custom-nav-brand-icon {
+          width: 32px; height: 32px; border-radius: 8px;
+          background: linear-gradient(135deg, #667eea, #f093fb);
+          display: flex; align-items: center; justify-content: center;
+          color: white; font-size: 14px;
+        }
+        .custom-nav-links { display: flex; align-items: center; gap: 2px; }
+        .custom-nav-link {
+          padding: 6px 12px; border-radius: 8px;
+          font-size: 13px; font-weight: 500;
+          color: #94a3b8; text-decoration: none;
+          transition: all 0.2s ease; white-space: nowrap;
+        }
+        .custom-nav-link:hover { color: #e2e8f0; background: rgba(255,255,255,0.08); }
+        .custom-nav-link.source-btn {
+          background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+          color: #a5b4fc; margin-left: 6px;
+        }
+        .custom-nav-link.source-btn:hover { background: rgba(129,140,248,0.15); border-color: rgba(129,140,248,0.3); }
+        .custom-nav-mobile-toggle {
+          display: none; width: 36px; height: 36px; border-radius: 8px;
+          align-items: center; justify-content: center;
+          border: 1px solid rgba(255,255,255,0.08); background: transparent;
+          color: #94a3b8; font-size: 16px; cursor: pointer;
+        }
+        .custom-nav-mobile-menu {
+          display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+          background: rgba(10, 14, 39, 0.96); backdrop-filter: blur(20px);
+          padding: 20px; z-index: 9998; flex-direction: column; gap: 2px; overflow-y: auto;
+        }
+        .custom-nav-mobile-menu.open { display: flex; }
+        .custom-nav-mobile-menu a {
+          display: flex; align-items: center; gap: 12px;
+          padding: 14px 16px; border-radius: 12px;
+          font-size: 15px; font-weight: 500; color: #94a3b8;
+          text-decoration: none; transition: all 0.2s;
+        }
+        .custom-nav-mobile-menu a:hover { background: rgba(255,255,255,0.06); color: #e2e8f0; }
+        .custom-nav-mobile-menu a i { width: 22px; text-align: center; color: #64748b; }
+        @media (max-width: 900px) {
+          .custom-nav-links { display: none; }
+          .custom-nav-mobile-toggle { display: flex; }
+          .custom-nav { padding: 0 16px; }
+        }
+        /* 隐藏 Volantis 原导航 */
+        body.custom-nav-active .l_header,
+        body.custom-nav-active #l_header,
+        body.custom-nav-active .header,
+        body.custom-nav-active #header,
+        body.custom-nav-active .nav-wrapper {
+          display: none !important;
+        }
+        body.custom-nav-active { padding-top: 64px !important; }
+      </style>
+      <script>
+        (function() {
+          // 如果页面已有自定义导航（首页/关于页），不执行
+          if (document.querySelector('.nav-brand')) return;
+          // 如果页面上没有 Volantis 导航特征，也不执行（安全fallback）
+          var volantisNav = document.querySelector('.l_header, #l_header, .header, #header, .nav-wrapper');
+          if (!volantisNav) return;
+
+          // 隐藏 Volantis 导航
+          volantisNav.style.display = 'none';
+          var volantisSubNav = document.querySelector('.l_header-sub, .header-sub, .sub-nav');
+          if (volantisSubNav) volantisSubNav.style.display = 'none';
+          document.body.classList.add('custom-nav-active');
+
+          // 插入自定义导航
+          var navHTML = '<nav class="custom-nav" id="customNav">' +
+            '<a href="/" class="custom-nav-brand">' +
+              '<div class="custom-nav-brand-icon"><i class="fa-solid fa-microchip"></i></div>' +
+              '<span>Wesley AI Lab</span>' +
+            '</a>' +
+            '<div class="custom-nav-links">' +
+              '<a href="/blog/" class="custom-nav-link">博客</a>' +
+              '<a href="/ai-column/" class="custom-nav-link">AI 专栏</a>' +
+              '<a href="/java-column/" class="custom-nav-link">Java 专栏</a>' +
+              '<a href="/projects/" class="custom-nav-link">项目作品</a>' +
+              '<a href="/friends/" class="custom-nav-link">友链</a>' +
+              '<a href="/guestbook/" class="custom-nav-link">留言</a>' +
+              '<a href="/about/" class="custom-nav-link">关于</a>' +
+              '<a href="https://github.com/wwk-ai" target="_blank" class="custom-nav-link source-btn"><i class="fa-brands fa-github"></i> 源码</a>' +
+            '</div>' +
+            '<button class="custom-nav-mobile-toggle" id="customMobileToggle"><i class="fa-solid fa-bars"></i></button>' +
+          '</nav>' +
+          '<div class="custom-nav-mobile-menu" id="customMobileMenu">' +
+            '<a href="/blog/"><i class="fa-solid fa-book-open"></i> 博客</a>' +
+            '<a href="/ai-column/"><i class="fa-solid fa-robot"></i> AI 专栏</a>' +
+            '<a href="/java-column/"><i class="fa-brands fa-java"></i> Java 专栏</a>' +
+            '<a href="/projects/"><i class="fa-solid fa-laptop-code"></i> 项目作品</a>' +
+            '<a href="/friends/"><i class="fa-solid fa-link"></i> 友链</a>' +
+            '<a href="/guestbook/"><i class="fa-solid fa-comments"></i> 留言</a>' +
+            '<a href="/about/"><i class="fa-solid fa-user"></i> 关于</a>' +
+            '<a href="https://github.com/wwk-ai" target="_blank"><i class="fa-brands fa-github"></i> 源码</a>' +
+          '</div>';
+
+          var temp = document.createElement('div');
+          temp.innerHTML = navHTML;
+          while (temp.firstChild) {
+            document.body.insertBefore(temp.firstChild, document.body.firstChild);
+          }
+
+          // Mobile menu toggle
+          var toggle = document.getElementById('customMobileToggle');
+          var menu = document.getElementById('customMobileMenu');
+          if (toggle && menu) {
+            toggle.addEventListener('click', function() {
+              menu.classList.toggle('open');
+              var icon = toggle.querySelector('i');
+              icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+            });
+            menu.querySelectorAll('a').forEach(function(a) {
+              a.addEventListener('click', function() {
+                menu.classList.remove('open');
+                toggle.querySelector('i').className = 'fa-solid fa-bars';
+              });
+            });
+          }
+        })();
+      </script>
 
 # ============================================================
 # 安全与忽略
