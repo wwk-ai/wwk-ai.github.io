@@ -135,6 +135,8 @@ sitemap:
 import:
   head_begin:
     - |
+      <link rel="icon" href="/favicon.ico?v=2" type="image/x-icon">
+    - |
       <style>
         .nav-main a, .nav-main .nav-item, .nav-sub .nav-item {
           white-space: nowrap !important;
