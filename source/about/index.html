@@ -484,27 +484,35 @@
   </div>
 
   <script>
-    // 打字机动画
+    // 打字机动画（5句轮询）
     (function() {
       const el = document.getElementById('typewriter');
-      const text = '以生成式 AI 驱动智能算力 / 认知决策 / 数字革新';
-      let charIndex = 0;
-      let isDeleting = false;
+      const texts = [
+        '以生成式 AI 驱动智能算力 / 认知决策 / 数字革新',
+        '以 AI 协同工程重构研发流程 / 代码交付 / 人效体系',
+        '以 Loop 闭环范式打通自动迭代 / 自检评估 / 持续优化',
+        '以 Spec 驱动开发平衡快速原型 / 规范落地 / 稳定交付',
+        '以全栈技术底座支撑业务创新 / 降本提效 / 长期增长'
+      ];
+      let ti = 0, ci = 0, isDeleting = false;
+      let text = texts[ti];
       function type() {
         if (isDeleting) {
-          el.textContent = text.substring(0, charIndex - 1);
-          charIndex--;
+          el.textContent = text.substring(0, ci - 1);
+          ci--;
         } else {
-          el.textContent = text.substring(0, charIndex + 1);
-          charIndex++;
+          el.textContent = text.substring(0, ci + 1);
+          ci++;
         }
-        let delay = isDeleting ? 80 : 120;
-        if (!isDeleting && charIndex === text.length) {
+        let delay = isDeleting ? 50 : 110;
+        if (!isDeleting && ci === text.length) {
           isDeleting = true;
-          delay = 2500;
-        } else if (isDeleting && charIndex === 0) {
+          delay = 2200;
+        } else if (isDeleting && ci === 0) {
           isDeleting = false;
-          delay = 600;
+          ti = (ti + 1) % texts.length;
+          text = texts[ti];
+          delay = 400;
         }
         setTimeout(type, delay);
       }
