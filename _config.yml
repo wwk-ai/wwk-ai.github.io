@@ -277,7 +277,7 @@ import:
           .custom-nav-mobile-toggle { display: flex; }
           .custom-nav { padding: 0 16px; }
         }
-        /* 隐藏 Volantis 原导航 */
+        /* 隐藏 Volantis 原导航和 cover/banner */
         body.custom-nav-active .l_header,
         body.custom-nav-active #l_header,
         body.custom-nav-active .header,
@@ -285,7 +285,17 @@ import:
         body.custom-nav-active .nav-wrapper {
           display: none !important;
         }
+        body.custom-nav-active .cover-wrapper,
+        body.custom-nav-active #cover,
+        body.custom-nav-active .l_cover,
+        body.custom-nav-active .cover,
+        body.custom-nav-active .article-header,
+        body.custom-nav-active .post-header,
+        body.custom-nav-active .page-header {
+          display: none !important;
+        }
         body.custom-nav-active { padding-top: 64px !important; }
+        body.custom-nav-active .l_main { margin-top: 0 !important; padding-top: 20px !important; }
       </style>
       <script>
         (function() {
