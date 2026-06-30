@@ -1,60 +1,66 @@
 /**
- * Wesley AI Lab - 全站统一访问计数器
- * 所有页面共享同一套 localStorage 数据
- * PV: 每次页面加载 +1
- * UV: 每个浏览器每天只计一次
- * 
- * 注意：此计数器基于 localStorage，仅同一浏览器内数据一致。
- * 如需跨设备/跨浏览器统计，需部署 Cloudflare Workers 后端（见 /workers/counter.js）
+ * Wesley AI Lab - 全站统一访问计数器（Cloudflare Workers 版）
+ * PV: 每次页面加载 +1（服务端计数，跨设备共享）
+ * UV: 每个浏览器每天只计一次（客户端 localStorage 去重 + 服务端计数）
+ * 所有设备/浏览器共享同一套数据
  */
 (function() {
   'use strict';
 
-  var PV_KEY = 'wal_site_pv';
-  var UV_TOTAL_KEY = 'wal_site_uv_total';
-  var UV_DATE_KEY = 'wal_site_uv_date';
-  var INIT_KEY = 'wal_counter_init';
+  var API_BASE = 'https://wesley-counter.weiwk01.workers.dev';
+  var UV_DATE_KEY = 'wal_uv_date';
 
-  var pv = parseInt(localStorage.getItem(PV_KEY) || '0');
-  var uvTotal = parseInt(localStorage.getItem(UV_TOTAL_KEY) || '0');
-  var hasInit = localStorage.getItem(INIT_KEY);
-
-  // 首次运行：继承之前 busuanzi 同步脚本的数据（如有）
-  if (!hasInit) {
-    var legacyPv = localStorage.getItem('busuanzi_site_pv');
-    var legacyUv = localStorage.getItem('busuanzi_site_uv');
-    if (legacyPv) pv = Math.max(pv, parseInt(legacyPv) || 0);
-    if (legacyUv) uvTotal = Math.max(uvTotal, parseInt(legacyUv) || 0);
-    localStorage.setItem(INIT_KEY, '1');
-  }
-
-  // PV +1
-  pv++;
-  localStorage.setItem(PV_KEY, pv);
-
-  // UV：每天只计一次
-  var today = new Date().toISOString().slice(0, 10);
-  var lastDate = localStorage.getItem(UV_DATE_KEY);
-  if (lastDate !== today) {
-    uvTotal++;
-    localStorage.setItem(UV_TOTAL_KEY, uvTotal);
-    localStorage.setItem(UV_DATE_KEY, today);
-  }
-
-  // 写入页面
-  function update() {
+  function updateDisplay(pv, uv) {
     var pvEl = document.getElementById('site-pv');
     var uvEl = document.getElementById('site-uv');
     var bzPv = document.getElementById('busuanzi_value_site_pv');
     var bzUv = document.getElementById('busuanzi_value_site_uv');
-
-    var pvText = pv.toLocaleString();
-    var uvText = uvTotal.toLocaleString();
-
+    var pvText = pv ? pv.toLocaleString() : '--';
+    var uvText = uv ? uv.toLocaleString() : '--';
     if (pvEl) pvEl.textContent = pvText;
     if (uvEl) uvEl.textContent = uvText;
     if (bzPv) bzPv.textContent = pvText;
     if (bzUv) bzUv.textContent = uvText;
+  }
+
+  function update() {
+    var today = new Date().toISOString().slice(0, 10);
+    var lastUvDate = null;
+    try { lastUvDate = localStorage.getItem(UV_DATE_KEY); } catch(e) {}
+
+    // PV: 每次页面访问 +1
+    fetch(API_BASE + '/pv')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var pv = data.pv || 0;
+
+        // UV: 每天只计一次
+        var uvPromise;
+        if (lastUvDate !== today) {
+          // 新的一天，调用 /uv 增加计数
+          uvPromise = fetch(API_BASE + '/uv?date=' + today)
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+              try { localStorage.setItem(UV_DATE_KEY, today); } catch(e) {}
+              return data.totalUv || 0;
+            })
+            .catch(function() { return 0; });
+        } else {
+          // 今天已计过，只读取当前值
+          uvPromise = fetch(API_BASE + '/stats')
+            .then(function(r) { return r.json(); })
+            .then(function(data) { return data.totalUv || 0; })
+            .catch(function() { return 0; });
+        }
+
+        return uvPromise.then(function(uv) {
+          updateDisplay(pv, uv);
+        });
+      })
+      .catch(function() {
+        // Worker API 不可用时显示占位符
+        updateDisplay(0, 0);
+      });
   }
 
   if (document.readyState === 'loading') {

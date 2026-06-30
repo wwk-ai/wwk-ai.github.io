@@ -7,7 +7,6 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    // CORS headers
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -19,7 +18,7 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // PV endpoint: GET /pv
+    // PV endpoint: GET /pv — 每次调用 +1
     if (path === '/pv') {
       const pv = (await env.COUNTERS.get('site_pv', { type: 'json' })) || 0;
       const newPv = pv + 1;
@@ -27,19 +26,23 @@ export default {
       return new Response(JSON.stringify({ pv: newPv }), { headers: corsHeaders });
     }
 
-    // UV endpoint: GET /uv?date=2026-06-30
+    // UV endpoint: GET /uv?date=2026-07-01 — 按天去重，总计 +1
     if (path === '/uv') {
       const date = url.searchParams.get('date') || new Date().toISOString().slice(0, 10);
       const key = 'site_uv_' + date;
       const uv = (await env.COUNTERS.get(key, { type: 'json' })) || 0;
       const newUv = uv + 1;
       await env.COUNTERS.put(key, JSON.stringify(newUv));
-      // Return both today's UV and total UV
-      const totalUv = (await env.COUNTERS.get('site_uv_total', { type: 'json' })) || 0;
+      // 新访客：总计 +1
+      let totalUv = (await env.COUNTERS.get('site_uv_total', { type: 'json' })) || 0;
+      if (newUv === 1) {
+        totalUv = totalUv + 1;
+        await env.COUNTERS.put('site_uv_total', JSON.stringify(totalUv));
+      }
       return new Response(JSON.stringify({ uv: newUv, totalUv: totalUv }), { headers: corsHeaders });
     }
 
-    // Stats endpoint: GET /stats (read-only, no increment)
+    // Stats endpoint: GET /stats — 只读，不递增
     if (path === '/stats') {
       const pv = (await env.COUNTERS.get('site_pv', { type: 'json' })) || 0;
       const today = new Date().toISOString().slice(0, 10);

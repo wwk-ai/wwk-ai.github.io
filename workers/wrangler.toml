@@ -5,8 +5,7 @@
   "kv_namespaces": [
     {
       "binding": "COUNTERS",
-      "id": "<YOUR_KV_NAMESPACE_ID>",
-      "preview_id": "<YOUR_KV_PREVIEW_ID>"
+      "id": "7607eab50ebd4d13bab04e7238d9d32c"
     }
   ]
 }
