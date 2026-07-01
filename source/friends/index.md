@@ -39,9 +39,15 @@ toc: false
       <li>有独立域名，非免费域名</li>
       <li>内容题材不限，技术类优先</li>
     </ul>
-    <p><strong>3. 提交申请</strong></p>
-    <p>满足上述条件后，在 <a href="https://github.com/wwk-ai/wwk-ai.github.io/issues/new?template=friend-link.yml" target="_blank" style="color:#4f46e5;">GitHub Issues</a> 提交友链申请。</p>
-    <p>右前链、右链相关站点请先完成「添加本站到您的友链」步骤后再提交申请。</p>
+    <p><strong>3. 在本页下方留言申请</strong></p>
+    <p>满足上述条件后，直接在本页下方的留言区按格式留言即可，无需去 GitHub 提交 Issue。</p>
+    <p>留言格式：</p>
+    <pre style="background:#f8f9fc;border:1px solid rgba(0,0,0,0.06);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;overflow-x:auto;margin:12px 0;color:#334155;"><code>站点名称：
+站点地址：
+站点描述：
+头像地址：（可选）
+</code></pre>
+    <p>右前链、右链相关站点请先完成「添加本站到您的友链」步骤后再留言申请。</p>
   </div>
 </div>
 
