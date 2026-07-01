@@ -232,7 +232,7 @@ plugins:
   parallax:
     enable: true
   busuanzi:
-    enable: false
+    enable: true
   aplayer:
     enable: false
   message:
