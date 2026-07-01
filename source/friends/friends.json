@@ -1,0 +1,20 @@
+{
+  "myself": {
+    "title": "Wesley AI Lab",
+    "avatar": "https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png",
+    "url": "https://wwk-ai.github.io/",
+    "screenshot": "https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png",
+    "description": "技术改变生活",
+    "keywords": ["AI", "大数据", "Java", "大模型"]
+  },
+  "friends": [
+    {
+      "title": "Wesley AI Lab",
+      "avatar": "https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png",
+      "url": "https://wwk-ai.github.io/",
+      "screenshot": "https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png",
+      "description": "技术改变生活",
+      "keywords": ["AI", "大数据"]
+    }
+  ]
+}
