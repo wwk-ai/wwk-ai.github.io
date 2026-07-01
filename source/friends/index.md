@@ -208,39 +208,52 @@ if (myselfEl) {
     '</div>';
 }
 
-// 从 GitHub Issues 读取友链
-fetch('https://api.github.com/repos/wwk-ai/wwk-ai.github.io/issues?state=open&per_page=100')
-  .then(function(r) {
-    if (!r.ok) {
-      throw new Error('HTTP ' + r.status + ' ' + r.statusText);
-    }
-    return r.json();
-  })
-  .then(function(issues) {
-    if (!Array.isArray(issues)) {
-      throw new Error('返回的不是数组: ' + JSON.stringify(issues).slice(0, 200));
-    }
-    var friends = [];
-    var debugInfo = [];
-    issues.forEach(function(issue) {
-      var data = parseIssueBody(issue.body);
-      if (data) {
-        friends.push(data);
-        debugInfo.push('✓ #' + issue.number + ' ' + (issue.title || '').slice(0, 20));
-      } else {
-        debugInfo.push('✗ #' + issue.number + ' ' + (issue.title || '').slice(0, 20) + ' (解析失败)');
-      }
+// 方案1：从 GitHub Issues API 读取（实时，但可能触发 rate limit）
+function loadFromIssues() {
+  return fetch('https://api.github.com/repos/wwk-ai/wwk-ai.github.io/issues?state=open&per_page=100')
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(issues) {
+      if (!Array.isArray(issues)) throw new Error('not array');
+      var friends = [];
+      issues.forEach(function(issue) {
+        var data = parseIssueBody(issue.body);
+        if (data) friends.push(data);
+      });
+      return friends;
     });
+}
 
-    // 开发调试：在控制台输出解析详情
-    console.log('[Friends] Issues loaded:', issues.length, 'Parsed:', friends.length);
-    console.log('[Friends] Debug:', debugInfo);
+// 方案2：从 jsDelivr CDN 读取 friends.json（国内快、无 rate limit）
+function loadFromCDN() {
+  return fetch('https://cdn.jsdelivr.net/gh/wwk-ai/wwk-ai.github.io@master/source/friends.json')
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      return Array.isArray(data) ? data : [];
+    });
+}
 
+// 优先 Issues API，失败自动 fallback 到 CDN，再失败用内置数据
+loadFromIssues()
+  .then(function(friends) {
+    console.log('[Friends] Loaded from GitHub Issues:', friends.length);
     renderFriends(friends);
   })
-  .catch(function(err) {
-    console.error('[Friends] API Error:', err.message);
-    // API 失败时使用 fallback 数据，不显示错误提示
-    renderFriends(FALLBACK_FRIENDS);
+  .catch(function(err1) {
+    console.warn('[Friends] Issues API failed:', err1.message, '- trying CDN fallback...');
+    loadFromCDN()
+      .then(function(friends) {
+        console.log('[Friends] Loaded from CDN:', friends.length);
+        renderFriends(friends);
+      })
+      .catch(function(err2) {
+        console.error('[Friends] CDN also failed:', err2.message, '- using built-in fallback');
+        renderFriends(FALLBACK_FRIENDS);
+      });
   });
 </script>
