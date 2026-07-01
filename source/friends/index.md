@@ -100,7 +100,7 @@ var MYSELF = {
   keywords: ['AI', '大数据', 'Java', '大模型']
 };
 
-// 从 Issue body 解析友链信息（兼容 YAML 和 JSON 格式）
+// 从 Issue body 解析友链信息（兼容 GitHub Issue form、YAML 和 JSON 格式）
 function parseIssueBody(body) {
   if (!body) return null;
   // 尝试 JSON 代码块
@@ -110,19 +110,88 @@ function parseIssueBody(body) {
   }
   // 尝试直接解析整个 body 为 JSON
   try { var d = JSON.parse(body); if (d.title && d.url) return d; } catch(e) {}
-  // 尝试解析 YAML 格式: - key: value
+
+  // 字段名映射：Issue form 字段 -> 友链数据字段
+  var fieldMap = {
+    '博客名称': 'title', 'title': 'title', '站点名称': 'title', 'name': 'title',
+    '博客地址': 'url', 'url': 'url', '站点地址': 'url', 'link': 'url', '地址': 'url',
+    '博客头像': 'avatar', 'avatar': 'avatar', '头像地址': 'avatar', '头像': 'avatar',
+    '博客描述': 'description', 'description': 'description', '站点描述': 'description', '描述': 'description',
+    'keywords': 'keywords', '标签': 'keywords'
+  };
+
   var result = {};
-  var lines = body.split('\n');
-  for (var i = 0; i < lines.length; i++) {
-    var m = lines[i].match(/^-\s*(\w+)\s*:\s*(.+)$/);
-    if (m) {
-      var key = m[1].trim();
-      var val = m[2].trim().replace(/^`|`$/g, '');
-      result[key] = val;
+
+  // 1. 先尝试解析 GitHub Issue form 格式: ### 字段名\n\n值
+  var formPattern = /###\s*(.+?)\n+\n*([\s\S]*?)(?=\n+###|$)/g;
+  var match;
+  while ((match = formPattern.exec(body)) !== null) {
+    var fieldName = match[1].trim();
+    var fieldValue = match[2].trim();
+    var mappedKey = fieldMap[fieldName];
+    if (mappedKey && fieldValue) {
+      result[mappedKey] = fieldValue;
     }
   }
   if (result.title && result.url) return result;
+
+  // 2. 尝试解析 YAML 格式: - key: value（支持前面有空格）
+  var lines = body.split(/\r?\n/);
+  for (var i = 0; i < lines.length; i++) {
+    var m = lines[i].match(/^\s*-\s*(\w+)\s*:\s*(.+)$/);
+    if (m) {
+      var key = m[1].trim();
+      var val = m[2].trim().replace(/^[`'"]+|[`'"]+$/g, '');
+      var mapped = fieldMap[key] || key;
+      result[mapped] = val;
+    }
+  }
+  if (result.title && result.url) return result;
+
+  // 3. 最后尝试普通键值对: key: value（前面没有 - 号）
+  var kvResult = {};
+  for (var j = 0; j < lines.length; j++) {
+    var kv = lines[j].match(/^\s*(\w+)\s*:\s*(.+)$/);
+    if (kv) {
+      var k2 = kv[1].trim();
+      var v2 = kv[2].trim().replace(/^[`'"]+|[`'"]+$/g, '');
+      var mapped2 = fieldMap[k2] || k2;
+      kvResult[mapped2] = v2;
+    }
+  }
+  if (kvResult.title && kvResult.url) return kvResult;
+
   return null;
+}
+
+// 内置 fallback 友链数据（API 失败时显示）
+var FALLBACK_FRIENDS = [
+  { title: '前端ovo', url: 'https://www.qdovo.com/', avatar: 'https://www.qdovo.com/images/avatar.jpeg', description: 'web前端开发', keywords: ['前端'] }
+];
+
+function renderFriends(friends) {
+  var gridEl = document.getElementById('flGrid');
+  if (!gridEl) return;
+  if (friends.length === 0) {
+    gridEl.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">暂无友链，欢迎在本页下方留言申请。</p>';
+    return;
+  }
+  gridEl.innerHTML = friends.map(function(f) {
+    var tags = '';
+    if (f.keywords) {
+      var kwArr = Array.isArray(f.keywords) ? f.keywords : String(f.keywords).split(/[,，]/);
+      tags = kwArr.map(function(k) {
+        var clean = String(k).trim().replace(/^\[|\]$/g, '').replace(/^#/, '');
+        return clean ? '<span>#' + clean + '</span>' : '';
+      }).filter(Boolean).join('');
+    }
+    return '<a href="' + f.url + '" target="_blank" class="fl-card" title="' + (f.description || '') + '">' +
+      '<img src="' + (f.avatar || 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png') + '" alt="' + f.title + '" class="fl-card-avatar" loading="lazy">' +
+      '<div class="fl-card-name">' + f.title + '</div>' +
+      '<div class="fl-card-desc">' + (f.description || '') + '</div>' +
+      (tags ? '<div class="fl-card-tags">' + tags + '</div>' : '') +
+    '</a>';
+  }).join('');
 }
 
 // 渲染我的信息
@@ -139,39 +208,39 @@ if (myselfEl) {
     '</div>';
 }
 
-// 从 GitHub Issues 读取友链（不带标签过滤，自动识别友链格式）
+// 从 GitHub Issues 读取友链
 fetch('https://api.github.com/repos/wwk-ai/wwk-ai.github.io/issues?state=open&per_page=100')
-  .then(function(r) { return r.json(); })
+  .then(function(r) {
+    if (!r.ok) {
+      throw new Error('HTTP ' + r.status + ' ' + r.statusText);
+    }
+    return r.json();
+  })
   .then(function(issues) {
+    if (!Array.isArray(issues)) {
+      throw new Error('返回的不是数组: ' + JSON.stringify(issues).slice(0, 200));
+    }
     var friends = [];
+    var debugInfo = [];
     issues.forEach(function(issue) {
       var data = parseIssueBody(issue.body);
       if (data) {
         friends.push(data);
+        debugInfo.push('✓ #' + issue.number + ' ' + (issue.title || '').slice(0, 20));
+      } else {
+        debugInfo.push('✗ #' + issue.number + ' ' + (issue.title || '').slice(0, 20) + ' (解析失败)');
       }
     });
 
-    var gridEl = document.getElementById('flGrid');
-    if (gridEl) {
-      if (friends.length === 0) {
-        gridEl.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">暂无友链，欢迎在本页下方留言申请。</p>';
-      } else {
-        gridEl.innerHTML = friends.map(function(f) {
-          var tags = (f.keywords || []).map(function(k) { return '<span>#' + (k.replace(/^\[|\]$/g,'')) + '</span>'; }).join('');
-          return '<a href="' + f.url + '" target="_blank" class="fl-card" title="' + f.description + '">' +
-            '<img src="' + (f.avatar || 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png') + '" alt="' + f.title + '" class="fl-card-avatar" loading="lazy">' +
-            '<div class="fl-card-name">' + f.title + '</div>' +
-            '<div class="fl-card-desc">' + (f.description || '') + '</div>' +
-            (tags ? '<div class="fl-card-tags">' + tags + '</div>' : '') +
-          '</a>';
-        }).join('');
-      }
-    }
+    // 开发调试：在控制台输出解析详情
+    console.log('[Friends] Issues loaded:', issues.length, 'Parsed:', friends.length);
+    console.log('[Friends] Debug:', debugInfo);
+
+    renderFriends(friends);
   })
-  .catch(function() {
-    var gridEl = document.getElementById('flGrid');
-    if (gridEl) {
-      gridEl.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">友链加载失败，请检查网络连接。</p>';
-    }
+  .catch(function(err) {
+    console.error('[Friends] API Error:', err.message);
+    // API 失败时使用 fallback 数据，不显示错误提示
+    renderFriends(FALLBACK_FRIENDS);
   });
 </script>
