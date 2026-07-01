@@ -141,6 +141,9 @@ import:
         .nav-main a, .nav-main .nav-item, .nav-sub .nav-item {
           white-space: nowrap !important;
         }
+        /* 隐藏 Volantis footer 自带的主题来源文字 */
+        .l_footer p:has(a[href*="hexo-theme-volantis"]) { display: none !important; }
+        footer p:has(a[href*="hexo-theme-volantis"]) { display: none !important; }
         .cover-body .subtitle {
           font-size: 1.25rem;
           font-weight: 500;
