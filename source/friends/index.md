@@ -9,18 +9,6 @@ toc: false
   <!-- 友链列表 -->
   <div class="fl-section-title">友情链接</div>
   <div class="fl-grid" id="flGrid"></div>
-
-  <!-- 本站信息 -->
-  <div class="fl-section-title">友链信息</div>
-  <div class="fl-apply">
-    <p>想要添加本站到您的友链列表，可直接复制以下信息：</p>
-    <pre style="background:#f8f9fc;border:1px solid rgba(0,0,0,0.06);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;overflow-x:auto;margin:12px 0;color:#334155;"><code>- title: Wesley AI Lab
-  avatar: https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png
-  url: https://wwk-ai.github.io/
-  screenshot: https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png
-  description: 技术改变生活
-  keywords: [AI, 大数据]</code></pre>
-  </div>
 </div>
 
 <style>
@@ -39,10 +27,6 @@ toc: false
   .fl-card-tags { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
   .fl-card-tags span { padding: 2px 10px; border-radius: 6px; font-size: 11px; font-weight: 500; background: rgba(99,102,241,0.06); color: #4f46e5; border: 1px solid rgba(79,70,229,0.08); }
 
-  /* 本站信息 */
-  .fl-apply { padding: 28px; background: #fff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.06); }
-  .fl-apply p { font-size: 14px; color: #64748b; line-height: 1.7; margin-bottom: 6px; }
-
   @media (max-width: 768px) {
     .fl-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
   }
@@ -51,8 +35,9 @@ toc: false
 <script>
 // 内置友链数据（主数据源 + 兜底）
 var ALL_FRIENDS = [
+  { title: 'Wesley AI Lab', url: 'https://wwk-ai.github.io/', avatar: 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png', description: '技术改变生活', keywords: ['AI', '大数据'] },
   { title: '前端ovo', url: 'https://www.qdovo.com/', avatar: 'https://www.qdovo.com/images/avatar.jpeg', description: 'web前端开发', keywords: ['前端'] },
-  { title: 'ControlNet Blog', url: 'https://controlnet.space/', avatar: 'https://controlnet.space/images/avatar.jpg', screenshot: 'https://controlnet.space/images/site_screenshot.webp', description: '永远13岁~', keywords: ['二次元', '技术'] }
+  { title: 'ControlNet Blog', url: 'https://controlnet.space/', avatar: 'https://controlnet.space/images/avatar.jpg', description: '永远13岁~', keywords: ['二次元', '技术'] }
 ];
 
 function renderFriends(friends) {
@@ -62,6 +47,7 @@ function renderFriends(friends) {
     gridEl.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">暂无友链，欢迎在本页下方留言申请。</p>';
     return;
   }
+  var defaultAvatar = 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png';
   gridEl.innerHTML = friends.map(function(f) {
     var tags = '';
     if (f.keywords) {
@@ -71,13 +57,28 @@ function renderFriends(friends) {
         return clean ? '<span>#' + clean + '</span>' : '';
       }).filter(Boolean).join('');
     }
+    var avatarSrc = f.avatar || defaultAvatar;
     return '<a href="' + f.url + '" target="_blank" class="fl-card" title="' + (f.description || '') + '">' +
-      '<img src="' + (f.avatar || 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png') + '" alt="' + f.title + '" class="fl-card-avatar" loading="lazy" onerror="this.src=\'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png\'">' +
+      '<img data-src="' + avatarSrc + '" src="' + defaultAvatar + '" alt="' + f.title + '" class="fl-card-avatar" onerror="this.removeAttribute(\'data-src\');this.src=\'' + defaultAvatar + '\'">' +
       '<div class="fl-card-name">' + f.title + '</div>' +
       '<div class="fl-card-desc">' + (f.description || '') + '</div>' +
       (tags ? '<div class="fl-card-tags">' + tags + '</div>' : '') +
     '</a>';
   }).join('');
+
+  // 延迟手动加载真实头像，绕过 Volantis lazyload 劫持
+  setTimeout(function() {
+    var imgs = gridEl.querySelectorAll('img[data-src]');
+    imgs.forEach(function(img) {
+      var realSrc = img.getAttribute('data-src');
+      if (realSrc) {
+        var tmp = new Image();
+        tmp.onload = function() { img.src = realSrc; img.removeAttribute('data-src'); };
+        tmp.onerror = function() { img.src = defaultAvatar; img.removeAttribute('data-src'); };
+        tmp.src = realSrc;
+      }
+    });
+  }, 300);
 }
 
 // 优先从本站 /friends.json 读取（同域名，最可靠），失败用内置数据

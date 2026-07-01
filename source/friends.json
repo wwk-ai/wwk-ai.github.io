@@ -1,5 +1,12 @@
 [
   {
+    "title": "Wesley AI Lab",
+    "url": "https://wwk-ai.github.io/",
+    "avatar": "https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png",
+    "description": "技术改变生活",
+    "keywords": ["AI", "大数据"]
+  },
+  {
     "title": "前端ovo",
     "url": "https://www.qdovo.com/",
     "avatar": "https://www.qdovo.com/images/avatar.jpeg",
@@ -10,7 +17,6 @@
     "title": "ControlNet Blog",
     "url": "https://controlnet.space/",
     "avatar": "https://controlnet.space/images/avatar.jpg",
-    "screenshot": "https://controlnet.space/images/site_screenshot.webp",
     "description": "永远13岁~",
     "keywords": ["二次元", "技术"]
   }
