@@ -220,8 +220,11 @@ site_footer:
     - name: Volantis
       url: https://volantis.js.org/
   analytics: |
-    <span>本站总访问量 <span id="site-pv">--</span> 次</span>
-    <span>| 访客数 <span id="site-uv">--</span> 人</span>
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">
+      <span>本站总访问量 <span id="site-pv" style="color:#818cf8;font-weight:600;">--</span> 次</span>
+      <span style="color:rgba(128,128,128,0.3);">|</span>
+      <span>访客数 <span id="site-uv" style="color:#818cf8;font-weight:600;">--</span> 人</span>
+    </div>
     <script src="/js/site-counter.js"></script>
 
 # ============================================================

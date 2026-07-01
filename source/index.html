@@ -263,7 +263,9 @@
     .footer-source { margin-bottom: 12px; line-height: 1.8; }
     .footer-source a { color: var(--accent); text-decoration: none; }
     .footer-source a:hover { text-decoration: underline; }
-    .footer-analytics { margin-bottom: 12px; }
+    .footer-analytics { display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px; }
+    .footer-analytics #site-pv, .footer-analytics #site-uv { color:var(--accent);font-weight:600; }
+    .footer-analytics .sep { color:rgba(128,128,128,0.3); }
     .footer-copyright { margin-top: 8px; }
 
     /* Reveal */
@@ -495,7 +497,8 @@
     </div>
     <div class="footer-analytics">
       <span>本站总访问量 <span id="site-pv">--</span> 次</span>
-      <span>| 访客数 <span id="site-uv">--</span> 人</span>
+      <span class="sep">|</span>
+      <span>访客数 <span id="site-uv">--</span> 人</span>
     </div>
     <div class="footer-copyright">Copyright &copy; 2020-2026 Wesley AI Lab</div>
   </footer>
