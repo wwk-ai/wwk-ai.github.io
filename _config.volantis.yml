@@ -214,11 +214,6 @@ site_footer:
       url: https://yuque.com/wwk-ai
     - icon: fa-solid fa-rss
       url: atom.xml
-  source:
-    - name: Hexo
-      url: https://hexo.io/
-    - name: Volantis
-      url: https://volantis.js.org/
   analytics: |
     <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">
       <span>本站总访问量 <span id="site-pv" style="color:#818cf8;font-weight:600;">--</span> 次</span>
