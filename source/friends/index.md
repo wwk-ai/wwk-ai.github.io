@@ -100,52 +100,68 @@ var MYSELF = {
   keywords: ['AI', '大数据', 'Java', '大模型']
 };
 
-// 从 GitHub Issues 读取友链
-fetch('https://api.github.com/repos/wwk-ai/wwk-ai.github.io/issues?labels=%E5%8F%8B%E9%93%BE&state=open&per_page=100')
+// 从 Issue body 解析友链信息（兼容 YAML 和 JSON 格式）
+function parseIssueBody(body) {
+  if (!body) return null;
+  // 尝试 JSON 代码块
+  var jsonMatch = body.match(/```json\n([\s\S]*?)\n```/);
+  if (jsonMatch) {
+    try { var d = JSON.parse(jsonMatch[1]); if (d.title && d.url) return d; } catch(e) {}
+  }
+  // 尝试直接解析整个 body 为 JSON
+  try { var d = JSON.parse(body); if (d.title && d.url) return d; } catch(e) {}
+  // 尝试解析 YAML 格式: - key: value
+  var result = {};
+  var lines = body.split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    var m = lines[i].match(/^-\s*(\w+)\s*:\s*(.+)$/);
+    if (m) {
+      var key = m[1].trim();
+      var val = m[2].trim().replace(/^`|`$/g, '');
+      result[key] = val;
+    }
+  }
+  if (result.title && result.url) return result;
+  return null;
+}
+
+// 渲染我的信息
+var myselfEl = document.getElementById('flMyself');
+if (myselfEl) {
+  var tags = (MYSELF.keywords || []).map(function(k) { return '<span>' + k + '</span>'; }).join('');
+  myselfEl.innerHTML =
+    '<img src="' + MYSELF.avatar + '" alt="' + MYSELF.title + '" class="fl-myself-avatar">' +
+    '<div class="fl-myself-info">' +
+      '<div class="fl-myself-name">' + MYSELF.title + '</div>' +
+      '<div class="fl-myself-desc">' + MYSELF.description + '</div>' +
+      '<div class="fl-myself-tags">' + tags + '</div>' +
+      '<a href="' + MYSELF.url + '" target="_blank" class="fl-myself-link"><i class="fa-solid fa-link"></i> 访问站点</a>' +
+    '</div>';
+}
+
+// 从 GitHub Issues 读取友链（不带标签过滤，自动识别友链格式）
+fetch('https://api.github.com/repos/wwk-ai/wwk-ai.github.io/issues?state=open&per_page=100')
   .then(function(r) { return r.json(); })
   .then(function(issues) {
-    // 渲染我的信息
-    var myselfEl = document.getElementById('flMyself');
-    if (myselfEl) {
-      var tags = (MYSELF.keywords || []).map(function(k) { return '<span>' + k + '</span>'; }).join('');
-      myselfEl.innerHTML =
-        '<img src="' + MYSELF.avatar + '" alt="' + MYSELF.title + '" class="fl-myself-avatar">' +
-        '<div class="fl-myself-info">' +
-          '<div class="fl-myself-name">' + MYSELF.title + '</div>' +
-          '<div class="fl-myself-desc">' + MYSELF.description + '</div>' +
-          '<div class="fl-myself-tags">' + tags + '</div>' +
-          '<a href="' + MYSELF.url + '" target="_blank" class="fl-myself-link"><i class="fa-solid fa-link"></i> 访问站点</a>' +
-        '</div>';
-    }
-
-    // 解析 Issue body 中的 JSON
     var friends = [];
     issues.forEach(function(issue) {
-      var body = issue.body || '';
-      // 提取 ```json ... ``` 代码块中的 JSON
-      var match = body.match(/```json\n([\s\S]*?)\n```/);
-      if (match) {
-        try {
-          var data = JSON.parse(match[1]);
-          if (data.title && data.url) {
-            friends.push(data);
-          }
-        } catch(e) {}
+      var data = parseIssueBody(issue.body);
+      if (data) {
+        friends.push(data);
       }
     });
 
-    // 渲染友链列表
     var gridEl = document.getElementById('flGrid');
     if (gridEl) {
       if (friends.length === 0) {
-        gridEl.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">暂无友链，欢迎在 GitHub 提交 Issue 申请。</p>';
+        gridEl.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">暂无友链，欢迎在本页下方留言申请。</p>';
       } else {
         gridEl.innerHTML = friends.map(function(f) {
-          var tags = (f.keywords || []).map(function(k) { return '<span>#' + k + '</span>'; }).join('');
+          var tags = (f.keywords || []).map(function(k) { return '<span>#' + (k.replace(/^\[|\]$/g,'')) + '</span>'; }).join('');
           return '<a href="' + f.url + '" target="_blank" class="fl-card" title="' + f.description + '">' +
-            '<img src="' + (f.avatar || f.icon || 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png') + '" alt="' + f.title + '" class="fl-card-avatar" loading="lazy">' +
+            '<img src="' + (f.avatar || 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png') + '" alt="' + f.title + '" class="fl-card-avatar" loading="lazy">' +
             '<div class="fl-card-name">' + f.title + '</div>' +
-            '<div class="fl-card-desc">' + f.description + '</div>' +
+            '<div class="fl-card-desc">' + (f.description || '') + '</div>' +
             (tags ? '<div class="fl-card-tags">' + tags + '</div>' : '') +
           '</a>';
         }).join('');
