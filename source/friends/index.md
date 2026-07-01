@@ -62,39 +62,71 @@ toc: false
 </style>
 
 <script>
-fetch('/friends/friends.json')
+// 我的站点信息
+var MYSELF = {
+  title: 'Wesley AI Lab',
+  avatar: 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png',
+  url: 'https://wwk-ai.github.io/',
+  description: '技术改变生活',
+  keywords: ['AI', '大数据', 'Java', '大模型']
+};
+
+// 从 GitHub Issues 读取友链
+fetch('https://api.github.com/repos/wwk-ai/wwk-ai.github.io/issues?labels=%E5%8F%8B%E9%93%BE&state=open&per_page=100')
   .then(function(r) { return r.json(); })
-  .then(function(data) {
+  .then(function(issues) {
     // 渲染我的信息
     var myselfEl = document.getElementById('flMyself');
-    if (data.myself && myselfEl) {
-      var m = data.myself;
-      var tags = (m.keywords || []).map(function(k) { return '<span>' + k + '</span>'; }).join('');
+    if (myselfEl) {
+      var tags = (MYSELF.keywords || []).map(function(k) { return '<span>' + k + '</span>'; }).join('');
       myselfEl.innerHTML =
-        '<img src="' + m.avatar + '" alt="' + m.title + '" class="fl-myself-avatar">' +
+        '<img src="' + MYSELF.avatar + '" alt="' + MYSELF.title + '" class="fl-myself-avatar">' +
         '<div class="fl-myself-info">' +
-          '<div class="fl-myself-name">' + m.title + '</div>' +
-          '<div class="fl-myself-desc">' + m.description + '</div>' +
+          '<div class="fl-myself-name">' + MYSELF.title + '</div>' +
+          '<div class="fl-myself-desc">' + MYSELF.description + '</div>' +
           '<div class="fl-myself-tags">' + tags + '</div>' +
-          '<a href="' + m.url + '" target="_blank" class="fl-myself-link"><i class="fa-solid fa-link"></i> 访问站点</a>' +
+          '<a href="' + MYSELF.url + '" target="_blank" class="fl-myself-link"><i class="fa-solid fa-link"></i> 访问站点</a>' +
         '</div>';
     }
 
+    // 解析 Issue body 中的 JSON
+    var friends = [];
+    issues.forEach(function(issue) {
+      var body = issue.body || '';
+      // 提取 ```json ... ``` 代码块中的 JSON
+      var match = body.match(/```json\n([\s\S]*?)\n```/);
+      if (match) {
+        try {
+          var data = JSON.parse(match[1]);
+          if (data.title && data.url) {
+            friends.push(data);
+          }
+        } catch(e) {}
+      }
+    });
+
     // 渲染友链列表
     var gridEl = document.getElementById('flGrid');
-    if (data.friends && gridEl) {
-      gridEl.innerHTML = data.friends.map(function(f) {
-        var tags = (f.keywords || []).map(function(k) { return '<span>#' + k + '</span>'; }).join('');
-        return '<a href="' + f.url + '" target="_blank" class="fl-card">' +
-          '<img src="' + f.avatar + '" alt="' + f.title + '" class="fl-card-avatar" loading="lazy">' +
-          '<div class="fl-card-name">' + f.title + '</div>' +
-          '<div class="fl-card-desc">' + f.description + '</div>' +
-          '<div class="fl-card-tags">' + tags + '</div>' +
-        '</a>';
-      }).join('');
+    if (gridEl) {
+      if (friends.length === 0) {
+        gridEl.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">暂无友链，欢迎在 GitHub 提交 Issue 申请。</p>';
+      } else {
+        gridEl.innerHTML = friends.map(function(f) {
+          var tags = (f.keywords || []).map(function(k) { return '<span>#' + k + '</span>'; }).join('');
+          return '<a href="' + f.url + '" target="_blank" class="fl-card" title="' + f.description + '">' +
+            '<img src="' + (f.avatar || f.icon || 'https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png') + '" alt="' + f.title + '" class="fl-card-avatar" loading="lazy">' +
+            '<div class="fl-card-name">' + f.title + '</div>' +
+            '<div class="fl-card-desc">' + f.description + '</div>' +
+            (tags ? '<div class="fl-card-tags">' + tags + '</div>' : '') +
+          '</a>';
+        }).join('');
+      }
     }
   })
   .catch(function() {
-    document.getElementById('flGrid').innerHTML = '<p style="color:#999;text-align:center;">友链加载失败，请刷新重试。</p>';
+    var gridEl = document.getElementById('flGrid');
+    if (gridEl) {
+      gridEl.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">友链加载失败，请检查网络连接。</p>';
+    }
   });
 </script>
