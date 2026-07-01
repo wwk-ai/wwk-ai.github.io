@@ -6,36 +6,24 @@ toc: false
 ---
 
 <div class="fl-container">
-  <!-- 本站友链信息 -->
-  <div class="fl-section-title">友链信息</div>
-  <div class="fl-info-card">
-    <div class="fl-info-row"><span class="fl-info-label">名称</span><span class="fl-info-value">Wesley AI Lab</span></div>
-    <div class="fl-info-row"><span class="fl-info-label">链接</span><a href="https://wwk-ai.github.io/" target="_blank" class="fl-info-value fl-info-link">https://wwk-ai.github.io/</a></div>
-    <div class="fl-info-row"><span class="fl-info-label">图标URL</span><span class="fl-info-value fl-info-url">https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png</span></div>
-    <div class="fl-info-row"><span class="fl-info-label">keywords</span><span class="fl-info-value">[AI, JAVA]</span></div>
-  </div>
-
   <!-- 友链列表 -->
   <div class="fl-grid" id="flGrid"></div>
+
+  <!-- 友链信息 -->
+  <div class="fl-info">
+    <h2 class="fl-info-title">友链信息</h2>
+    <p>名称：<strong>Wesley AI Lab</strong></p>
+    <p>链接：<a href="https://wwk-ai.github.io/" target="_blank">https://wwk-ai.github.io/</a></p>
+    <p>图标URL：<code>https://gcore.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png</code></p>
+    <p>keywords：<code>[AI, JAVA]</code></p>
+  </div>
 </div>
 
 <style>
   .fl-container { max-width: 960px; margin: 0 auto; padding: 20px 0 60px; }
-  .fl-section-title { font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 40px 0 24px; letter-spacing: -0.01em; }
-  .fl-section-title:first-child { margin-top: 0; }
-
-  /* 本站信息卡片 */
-  .fl-info-card { background: #fff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.04); padding: 24px 28px; }
-  .fl-info-row { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.04); }
-  .fl-info-row:last-child { border-bottom: none; }
-  .fl-info-label { width: 80px; flex-shrink: 0; font-size: 13px; font-weight: 600; color: #8892b0; }
-  .fl-info-value { font-size: 14px; color: #334155; word-break: break-all; }
-  .fl-info-link { color: #4f46e5; text-decoration: none; font-weight: 500; }
-  .fl-info-link:hover { color: #4338ca; text-decoration: underline; }
-  .fl-info-url { font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 12px; color: #64748b; background: #f8f9fc; padding: 4px 10px; border-radius: 6px; }
 
   /* 友链卡片网格 */
-  .fl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-top: 32px; }
+  .fl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
   .fl-card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 24px 16px; background: #fff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: all 0.3s ease; text-decoration: none; color: inherit; }
   .fl-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); border-color: rgba(99,102,241,0.15); }
   .fl-card-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; margin-bottom: 14px; border: 3px solid rgba(99,102,241,0.1); transition: all 0.3s; }
@@ -43,12 +31,19 @@ toc: false
   .fl-card-name { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; }
   .fl-card-desc { font-size: 12px; color: #8892b0; line-height: 1.5; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .fl-card-tags { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
-  .fl-card-tags span { padding: 2px 10px; border-radius: 6px; font-size: 11px; font-weight: 500; background: rgba(99,102,241,0.06); color: #4f46e5; border: 1px solid rgba(79,70,229,0.08); }
+  .fl-card-tag { padding: 2px 10px; border-radius: 6px; font-size: 11px; font-weight: 500; background: rgba(99,102,241,0.06); color: #4f46e5; border: 1px solid rgba(79,70,229,0.08); }
+
+  /* 友链信息 */
+  .fl-info { margin-top: 48px; }
+  .fl-info-title { font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .fl-info p { font-size: 14px; color: #64748b; line-height: 2; margin: 0; }
+  .fl-info strong { color: #1a1a2e; }
+  .fl-info a { color: #4f46e5; font-weight: 500; }
+  .fl-info a:hover { text-decoration: underline; }
+  .fl-info code { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; background: #f1f3f9; padding: 2px 8px; border-radius: 4px; color: #4f46e5; }
 
   @media (max-width: 768px) {
     .fl-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-    .fl-info-row { flex-direction: column; align-items: flex-start; gap: 4px; }
-    .fl-info-label { width: auto; }
   }
 </style>
 
@@ -73,7 +68,7 @@ function renderFriends(friends) {
       var kwArr = Array.isArray(f.keywords) ? f.keywords : String(f.keywords).split(/[,，]/);
       tags = kwArr.map(function(k) {
         var clean = String(k).trim().replace(/^\[|\]$/g, '').replace(/^#/, '');
-        return clean ? '<span>#' + clean + '</span>' : '';
+        return clean ? '<span class="fl-card-tag">' + clean + '</span>' : '';
       }).filter(Boolean).join('');
     }
     var avatarSrc = f.avatar || defaultAvatar;
