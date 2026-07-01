@@ -180,6 +180,17 @@ import:
   body_end:
     - |
       <script>
+        // 删除 Volantis footer 自带的主题来源文字
+        document.addEventListener('DOMContentLoaded', function() {
+          document.querySelectorAll('footer p, .l_footer p, #footer p').forEach(function(p) {
+            if (p.textContent.indexOf('作为主题') !== -1 || p.textContent.indexOf('本站使用') !== -1 || p.textContent.indexOf('Powered by') !== -1) {
+              p.style.display = 'none';
+            }
+          });
+        });
+      </script>
+    - |
+      <script>
         // Giscus 评论系统 (Volantis 6.x 无内置giscus支持，手动注入)
         document.addEventListener('DOMContentLoaded', function() {
           // 仅在有 #giscus-container 的页面加载评论
